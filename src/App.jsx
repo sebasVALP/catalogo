@@ -344,6 +344,67 @@ function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onChe
   )
 }
 
+function InfographicSection() {
+  const stats = [
+    { value: '200+', label: 'Diseños exclusivos', icon: 'palette' },
+    { value: '5.000+', label: 'Clientes satisfechos', icon: 'people' },
+    { value: '24/7', label: 'Atención al cliente', icon: 'support_agent' },
+    { value: '100%', label: 'Pagos seguros', icon: 'verified' },
+  ]
+
+  return (
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <div
+        className="rounded-xl border border-card-border overflow-hidden"
+        style={{ backgroundColor: '#121315' }}
+      >
+        <div className="p-8 md:p-12 text-center">
+          <span
+            className="inline-block px-4 py-1 text-sm font-bold uppercase tracking-widest mb-4 rounded"
+            style={{ backgroundColor: '#D4D400', color: '#121315' }}
+          >
+            Storebass en cifras
+          </span>
+          <h2
+            className="font-headline-lg text-3xl md:text-4xl uppercase mb-4"
+            style={{ color: '#D4D400' }}
+          >
+            Nuestro impacto
+          </h2>
+          <p className="text-white/70 max-w-xl mx-auto mb-10">
+            Más que una tienda, una comunidad que crece cada día.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat) => (
+              <div
+                key={stat.icon}
+                className="flex flex-col items-center gap-3 p-6 rounded-lg"
+                style={{ border: '1px solid #4C4C4C', backgroundColor: 'rgba(212, 212, 0, 0.05)' }}
+              >
+                <span
+                  className="material-symbols-outlined text-4xl"
+                  style={{ color: '#D4D400' }}
+                >
+                  {stat.icon}
+                </span>
+                <span
+                  className="font-headline-lg text-3xl md:text-4xl"
+                  style={{ color: '#D4D400' }}
+                >
+                  {stat.value}
+                </span>
+                <span className="text-white/80 text-sm font-title-md uppercase tracking-wide">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function App() {
   const { cart, isOpen, setIsOpen, totalCount, addToCart, removeFromCart, updateQuantity, formatPrice } = useCart()
 
@@ -367,6 +428,7 @@ export default function App() {
         <div id="featured-section">
           <FeaturedSection onAddToCart={addToCart} />
         </div>
+        <InfographicSection />
         <WhyBuySection />
       </main>
 
