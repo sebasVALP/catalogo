@@ -262,44 +262,38 @@ function WhyBuySection() {
   )
 }
 
-function FooterSection() {
+function FooterSection({ onNavigateCategories }) {
   return (
     <footer className="bg-surface-container-lowest border-t border-outline-variant topographic-bg relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto relative z-10">
         <div className="col-span-1 md:col-span-1">
           <h3 className="font-headline-lg text-headline-lg text-primary uppercase mb-6">Storebass</h3>
           <p className="text-white/70 text-sm mb-6">Elevando el estilo urbano desde 2024. Los mejores accesorios para quienes no temen destacar.</p>
           <div className="flex gap-4">
-            <a id="footer-social-web" className="text-white hover:text-primary transition-all p-1" href="#"><Icon name="public" /></a>
-            <a id="footer-social-share" className="text-white hover:text-primary transition-all p-1" href="#"><Icon name="share" /></a>
+            <a id="footer-social-web" className="text-white hover:text-primary transition-all p-1" href="https://www.instagram.com/storebass_col?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><Icon name="public" /></a>
+            <a id="footer-social-share" className="text-white hover:text-primary transition-all p-1" href="https://www.instagram.com/storebass_col?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><Icon name="share" /></a>
           </div>
         </div>
         <div className="flex flex-col gap-1">
           <h4 className="font-title-md text-white uppercase mb-4">Colecciones</h4>
-          <a id="footer-link-pins" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Pines</a>
-          <a id="footer-link-keychains" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Llaveros</a>
-          <a id="footer-link-caps" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Gorras</a>
-        </div>
-        <div className="flex flex-col gap-1">
-          <h4 className="font-title-md text-white uppercase mb-4">Soporte</h4>
-          <a id="footer-link-contact" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Contacto</a>
-          <a id="footer-link-terms" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Términos y Condiciones</a>
-          <a id="footer-link-faq" className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200" href="#">Preguntas Frecuentes</a>
+          <button id="footer-link-pins" onClick={() => onNavigateCategories('Pines')} className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200 text-left bg-transparent border-none cursor-pointer">Pines</button>
+          <button id="footer-link-keychains" onClick={() => onNavigateCategories('Llaveros')} className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200 text-left bg-transparent border-none cursor-pointer">Llaveros</button>
+          <button id="footer-link-caps" onClick={() => onNavigateCategories('Gorras')} className="text-white/70 font-label-sm text-label-sm py-3 block hover:text-primary hover:translate-x-1 transition-all duration-200 text-left bg-transparent border-none cursor-pointer">Gorras</button>
         </div>
         <div className="flex flex-col gap-4">
           <h4 className="font-title-md text-white uppercase mb-2">Contacto</h4>
-          <div className="flex items-center gap-3 text-white/70">
+          <a href="tel:3053572974" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors no-underline">
             <Icon name="phone" className="text-primary" />
             <span className="text-sm">305 3572974</span>
-          </div>
-          <div className="flex items-center gap-3 text-white/70">
+          </a>
+          <a href="https://www.instagram.com/storebass_col?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors no-underline">
             <Icon name="alternate_email" className="text-primary" />
             <span className="text-sm">@storebass_col</span>
-          </div>
-          <div className="flex items-center gap-3 text-white/70">
+          </a>
+          <a href="https://maps.google.com/?q=Cra.+16+%2310-56" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors no-underline">
             <Icon name="location_on" className="text-primary" />
             <span className="text-sm">Cra. 16 #10-56</span>
-          </div>
+          </a>
         </div>
       </div>
       <div className="border-t border-outline-variant/30 py-8 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center text-white/70 text-sm relative z-10">
@@ -938,7 +932,7 @@ export default function App() {
         <CheckoutPage cart={cart} formatPrice={formatPrice} onNavigateHome={navigateHome} onPaymentComplete={navigatePaymentComplete} />
       )}
 
-      <FooterSection />
+      <FooterSection onNavigateCategories={navigateCategories} />
 
       <CartDrawer
         cart={cart}
