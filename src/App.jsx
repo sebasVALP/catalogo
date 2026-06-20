@@ -203,7 +203,7 @@ function FeaturedSection({ onAddToCart, onNavigateProduct }) {
 function CategoryProductGrid({ categoryName, products, onAddToCart, onNavigateProduct }) {
   const sectionId = 'cat-' + categoryName.toLowerCase()
   return (
-    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-28">
+    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-40">
       <div className="flex items-center justify-between mb-8">
         <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white">{categoryName}</h2>
         <a className="flex items-center space-x-2 font-bold hover:text-yellow-400 transition text-primary" href="#">
@@ -282,7 +282,7 @@ function FooterSection({ onNavigateCategories }) {
         </div>
         <div className="flex flex-col gap-4">
           <h4 className="font-title-md text-white uppercase mb-2">Contacto</h4>
-          <a href="tel:3053572974" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors no-underline">
+          <a href="https://wa.me/573053572974" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors no-underline">
             <Icon name="phone" className="text-primary" />
             <span className="text-sm">305 3572974</span>
           </a>
@@ -440,14 +440,17 @@ function InfographicSection() {
 }
 
 function CategoriesPage({ onAddToCart, onNavigateProduct, scrollToCategory }) {
-  const prevScroll = React.useRef(null)
   React.useEffect(() => {
-    if (scrollToCategory && scrollToCategory !== prevScroll.current) {
-      prevScroll.current = scrollToCategory
+    if (scrollToCategory) {
       setTimeout(() => {
         const el = document.getElementById('cat-' + scrollToCategory.toLowerCase())
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.pageYOffset - 100
+          window.scrollTo({ top: y, behavior: 'smooth' })
+        }
       }, 100)
+    } else {
+      window.scrollTo({ top: 100, behavior: 'smooth' })
     }
   }, [scrollToCategory])
   return (
@@ -801,7 +804,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
               { icon: 'lock', text: 'Pagos 100%\nseguros' },
               { icon: 'support_agent', text: 'Atención\npersonalizada' },
             ].map((item) => (
-              <div key={item.icon} className="flex items-center gap-4 group">
+                <div key={item.icon} className="flex items-center gap-4 group">
                 <div className="p-4 bg-primary rounded-2xl text-on-primary">
                   <Icon name={item.icon} className="w-8 h-8 text-3xl" />
                 </div>
@@ -906,11 +909,11 @@ export default function App() {
   const [scrollToCategory, setScrollToCategory] = React.useState(null)
   const [selectedProduct, setSelectedProduct] = React.useState(null)
 
-  const scrollTop = useCallback(() => window.scrollTo(0, 0), [])
+  const scrollTop = useCallback(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [])
   const navigateCheckout = useCallback(() => { setIsOpen(false); setPage('checkout'); scrollTop() }, [scrollTop])
   const navigatePaymentComplete = useCallback(() => { setPage('paymentComplete'); scrollTop() }, [scrollTop])
   const navigateHome = useCallback(() => { setPage('home'); setScrollToCategory(null); setSelectedProduct(null); scrollTop() }, [scrollTop])
-  const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null); setSelectedProduct(null); scrollTop() }, [scrollTop])
+  const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null); setSelectedProduct(null) }, [])
   const navigateProduct = useCallback((productId) => {
     const product = ALL_PRODUCTS.find(p => p.id === productId)
     if (product) { setSelectedProduct(product); setPage('product'); scrollTop() }
