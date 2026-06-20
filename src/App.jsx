@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { useCart } from './hooks/useCart'
 
 const PRODUCTS_BY_CATEGORY = {
@@ -41,14 +41,14 @@ function Icon({ name, className = '' }) {
   return <span className={`material-symbols-outlined ${className}`}>{name}</span>
 }
 
-function Navbar({ totalCount, onCartToggle }) {
+function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories, currentPage }) {
   return (
     <header className="bg-surface/90 backdrop-blur-md border-b border-outline-variant fixed top-0 z-50 w-full">
       <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
-        <a id="brand-logo" className="font-headline-lg text-headline-lg text-primary uppercase italic tracking-tighter" href="#">Storebass</a>
+        <button id="brand-logo" onClick={onNavigateHome} className="font-headline-lg text-headline-lg text-primary uppercase italic tracking-tighter bg-transparent border-none cursor-pointer">Storebass</button>
         <nav className="hidden md:flex gap-gutter">
-          <a id="nav-categories" className="text-white font-medium hover:text-primary transition-colors duration-200 font-title-md text-title-md" href="#">CATEGORÍAS</a>
-          <a id="nav-promotions" className="text-primary font-bold border-b-2 border-primary pb-1 font-title-md text-title-md" href="#">PROMOCIONES</a>
+          <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÍAS</button>
+          <button id="nav-promotions" className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'promotions' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>PROMOCIONES</button>
         </nav>
         <div className="flex items-center gap-4">
           <div className="relative hidden sm:block group">
@@ -116,7 +116,7 @@ function HeroSection() {
   )
 }
 
-function CategoriesSection() {
+function CategoriesSection({ onNavigateCategories }) {
   const categories = [
     {
       id: 'category-card-pins',
@@ -143,7 +143,7 @@ function CategoriesSection() {
       <h2 className="font-headline-lg text-headline-lg mb-12 uppercase border-l-4 border-primary pl-6 text-white">CATEGORÍAS</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         {categories.map((cat) => (
-          <a key={cat.id} id={cat.id} className="group relative h-[400px] overflow-hidden rounded border border-card-border bg-elevated-gray" href="#">
+          <button key={cat.id} id={cat.id} onClick={onNavigateCategories} className="group relative h-[400px] overflow-hidden rounded border border-card-border bg-elevated-gray text-left w-full cursor-pointer">
             <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={cat.src} alt={cat.title} />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent flex flex-col justify-end p-8">
               <span className="bg-primary text-on-primary px-3 py-1 text-label-sm font-label-sm rounded-sm mb-2 w-fit">{cat.tag}</span>
@@ -152,7 +152,7 @@ function CategoriesSection() {
                 <Icon name="arrow_forward" className="border border-primary rounded-full p-2 text-primary group-hover:bg-primary group-hover:text-on-primary transition-all" />
               </div>
             </div>
-          </a>
+          </button>
         ))}
       </div>
     </section>
@@ -466,8 +466,39 @@ function InfographicSection() {
   )
 }
 
+function CategoriesPage({ onAddToCart }) {
+  return (
+    <main>
+      {Object.entries(PRODUCTS_BY_CATEGORY).map(([category, products]) => (
+        <CategoryProductGrid
+          key={category}
+          categoryName={category}
+          products={products}
+          onAddToCart={onAddToCart}
+        />
+      ))}
+    </main>
+  )
+}
+
+function HomePage({ onAddToCart, onNavigateCategories }) {
+  return (
+    <main>
+      <HeroSection />
+      <CategoriesSection onNavigateCategories={onNavigateCategories} />
+      <PromotionBanner />
+      <div id="featured-section">
+        <FeaturedSection onAddToCart={onAddToCart} />
+      </div>
+      <InfographicSection />
+      <WhyBuySection />
+    </main>
+  )
+}
+
 export default function App() {
   const { cart, isOpen, setIsOpen, totalCount, addToCart, removeFromCart, updateQuantity, formatPrice } = useCart()
+  const [page, setPage] = React.useState('home')
 
   const scrollToFeatured = useCallback(() => {
     const el = document.getElementById('featured-section')
@@ -478,30 +509,18 @@ export default function App() {
     alert('¡Gracias por tu compra! Procediendo a la pasarela de pagos segura...')
   }, [])
 
+  const navigateHome = useCallback(() => setPage('home'), [])
+  const navigateCategories = useCallback(() => setPage('categories'), [])
+
   return (
     <div className="bg-background text-white font-body-base antialiased min-h-screen">
-      <Navbar totalCount={totalCount} onCartToggle={() => setIsOpen(true)} />
+      <Navbar totalCount={totalCount} onCartToggle={() => setIsOpen(true)} onNavigateHome={navigateHome} onNavigateCategories={navigateCategories} currentPage={page} />
 
-      <main>
-        <HeroSection />
-        <CategoriesSection />
-        <PromotionBanner />
-        <div id="featured-section">
-          <FeaturedSection onAddToCart={addToCart} />
-        </div>
-        <InfographicSection />
-
-        {Object.entries(PRODUCTS_BY_CATEGORY).map(([category, products]) => (
-          <CategoryProductGrid
-            key={category}
-            categoryName={category}
-            products={products}
-            onAddToCart={addToCart}
-          />
-        ))}
-
-        <WhyBuySection />
-      </main>
+      {page === 'home' ? (
+        <HomePage onAddToCart={addToCart} onNavigateCategories={navigateCategories} />
+      ) : (
+        <CategoriesPage onAddToCart={addToCart} />
+      )}
 
       <FooterSection />
 
