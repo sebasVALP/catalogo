@@ -470,6 +470,139 @@ function CategoriesPage({ onAddToCart, scrollToCategory }) {
   )
 }
 
+function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0)
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const shipping = subtotal > 0 ? 8000 : 0
+  const total = subtotal + shipping
+
+  return (
+    <main className="flex-grow max-w-7xl mx-auto px-4 py-10 w-full pt-24">
+      <div className="mb-10">
+        <h1 className="font-headline-lg text-5xl uppercase italic flex items-center gap-4 border-b-4 border-primary inline-block pb-2 text-white">
+          Carrito de Compras
+          <Icon name="shopping_cart" className="text-5xl text-primary" />
+        </h1>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-7 space-y-6">
+          <section className="bg-elevated-gray rounded-xl p-8 border border-card-border" data-purpose="personal-data">
+            <div className="flex items-center gap-3 mb-6">
+              <Icon name="person" className="text-2xl text-primary" />
+              <h2 className="font-headline-lg text-xl uppercase text-white">Datos Personales</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Nombre" type="text" />
+              <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Apellido" type="text" />
+              <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Correo electrónico" type="email" />
+              <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Celular" type="tel" />
+            </div>
+          </section>
+          <section className="bg-elevated-gray rounded-xl p-8 border border-card-border" data-purpose="payment-methods">
+            <div className="flex items-center gap-3 mb-2">
+              <Icon name="credit_card" className="text-2xl text-primary" />
+              <h2 className="font-headline-lg text-xl uppercase text-white">Métodos de Pago</h2>
+            </div>
+            <p className="text-xs text-gray-400 mb-6">Selecciona tu método de pago de preferencia</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+              {['credit_card', 'account_balance', 'paypal', 'payments'].map((method) => (
+                <button key={method} className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+                  <Icon name={method} className="text-3xl text-primary" />
+                  <span className="text-[10px] text-center text-white">
+                    {method === 'credit_card' ? 'Tarjeta débito o crédito' :
+                     method === 'account_balance' ? 'PSE' :
+                     method === 'paypal' ? 'PayPal' : 'Efectivo'}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <div className="space-y-4">
+              <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Número de la tarjeta" type="text" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="EXP MM/AA" type="text" />
+                <input className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="CVV" type="text" />
+                <input className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Titular de la tarjeta" type="text" />
+              </div>
+            </div>
+            <div className="mt-6 bg-surface-container-low border border-primary/30 rounded-lg p-4 flex justify-between items-center">
+              <div className="flex flex-col">
+                <p className="text-xs text-white"><span className="text-primary font-bold">Envío a</span> Pereira</p>
+                <p className="text-[10px] text-gray-400">Entrega estimada de 2 a 5 días</p>
+              </div>
+              <button className="text-primary font-bold text-sm">Cambiar</button>
+            </div>
+            <div className="mt-6 flex items-center gap-3">
+              <input checked type="checkbox" className="rounded bg-transparent border-gray-500 text-primary focus:ring-primary" />
+              <label className="text-[10px] text-gray-400 uppercase">Aceptas las políticas de tratamiento de datos</label>
+            </div>
+          </section>
+        </div>
+        <div className="lg:col-span-5">
+          <aside className="bg-elevated-gray rounded-xl p-8 border border-card-border sticky top-24" data-purpose="order-summary">
+            <div className="flex items-center gap-3 mb-8">
+              <Icon name="receipt_long" className="text-2xl text-primary" />
+              <h2 className="font-headline-lg text-3xl uppercase text-white">Resúmen del Pedido</h2>
+            </div>
+            <div className="space-y-6 mb-8 border-b border-card-border pb-8">
+              {cart.map((item) => (
+                <div key={item.id} className="flex gap-4 items-center">
+                  <div className="w-20 h-20 bg-surface-container-low rounded-lg overflow-hidden border border-card-border p-2">
+                    <img alt={item.name} className="w-full h-full object-contain" src={item.img} />
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="font-headline-lg text-xl uppercase leading-tight text-white">{item.name}</h3>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-xl text-white">{formatPrice(item.price)}</p>
+                    <div className="bg-surface-container-low text-[10px] px-1.5 rounded inline-block text-gray-400">{item.quantity}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-4 mb-8">
+              <div className="flex justify-between items-center italic">
+                <p className="text-lg text-white">SubTotal ({totalCount} producto{totalCount !== 1 ? 's' : ''})</p>
+                <p className="font-bold text-xl text-white">{formatPrice(subtotal)}</p>
+              </div>
+              <div className="flex justify-between items-center italic">
+                <p className="text-lg text-white">Envío</p>
+                <p className="font-bold text-xl text-white">{shipping > 0 ? formatPrice(shipping) : 'Gratis'}</p>
+              </div>
+              <div className="flex justify-between items-center border-t border-card-border pt-4">
+                <p className="text-xl italic text-white">Total a pagar</p>
+                <p className="font-bold text-3xl text-primary">{formatPrice(total)}</p>
+              </div>
+            </div>
+            <button className="w-full bg-transparent border-2 border-green-500 rounded-full py-4 px-6 flex items-center justify-between group hover:bg-green-500/10 transition-colors">
+              <Icon name="lock" className="text-white" />
+              <span className="font-headline-lg text-2xl uppercase tracking-widest text-white">Pagar {formatPrice(total)}</span>
+              <Icon name="arrow_forward" className="text-white group-hover:translate-x-1 transition-transform" />
+            </button>
+          </aside>
+        </div>
+      </div>
+      <section className="mt-24 text-center">
+        <h2 className="font-headline-lg text-4xl uppercase mb-12 text-white">¿Por qué comprar en Storebass?</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
+            { icon: 'verified', text: 'Productos\nexclusivos' },
+            { icon: 'lock', text: 'Pagos 100%\nseguros' },
+            { icon: 'support_agent', text: 'Atención\npersonalizada' },
+          ].map((item) => (
+            <div key={item.icon} className="flex flex-col items-center">
+              <div className="mb-4 text-primary">
+                <Icon name={item.icon} className="text-5xl" />
+              </div>
+              <p className="font-headline-lg text-xl uppercase leading-tight text-white">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  )
+}
+
 function HomePage({ onAddToCart, onNavigateCategories }) {
   return (
     <main>
@@ -489,15 +622,7 @@ export default function App() {
   const [page, setPage] = React.useState('home')
   const [scrollToCategory, setScrollToCategory] = React.useState(null)
 
-  const scrollToFeatured = useCallback(() => {
-    const el = document.getElementById('featured-section')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
-  const handleCheckout = useCallback(() => {
-    alert('¡Gracias por tu compra! Procediendo a la pasarela de pagos segura...')
-  }, [])
-
+  const navigateCheckout = useCallback(() => { setIsOpen(false); setPage('checkout') }, [])
   const navigateHome = useCallback(() => { setPage('home'); setScrollToCategory(null) }, [])
   const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null) }, [])
 
@@ -507,8 +632,10 @@ export default function App() {
 
       {page === 'home' ? (
         <HomePage onAddToCart={addToCart} onNavigateCategories={navigateCategories} />
-      ) : (
+      ) : page === 'categories' ? (
         <CategoriesPage onAddToCart={addToCart} scrollToCategory={scrollToCategory} />
+      ) : (
+        <CheckoutPage cart={cart} formatPrice={formatPrice} onNavigateHome={navigateHome} />
       )}
 
       <FooterSection />
@@ -519,7 +646,7 @@ export default function App() {
         setIsOpen={setIsOpen}
         onRemove={removeFromCart}
         onUpdateQuantity={updateQuantity}
-        onCheckout={handleCheckout}
+        onCheckout={navigateCheckout}
         formatPrice={formatPrice}
       />
     </div>
