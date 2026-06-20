@@ -69,7 +69,7 @@ function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories
   )
 }
 
-function HeroSection() {
+function HeroSection({ onNavigateCategories }) {
   return (
     <section className="relative overflow-hidden topographic-bg bg-surface pt-24">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 items-center relative z-10 min-h-[420px]">
@@ -84,7 +84,7 @@ function HeroSection() {
             Más de 200 diseños disponibles.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button id="btn-hero-catalog" className="bg-primary text-on-primary px-8 py-3.5 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center gap-3 rounded">
+            <button id="btn-hero-catalog" onClick={onNavigateCategories} className="bg-primary text-on-primary px-8 py-3.5 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center gap-3 rounded">
               VER CATÁLOGO
               <Icon name="arrow_forward" className="text-xl" />
             </button>
@@ -606,7 +606,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
 function HomePage({ onAddToCart, onNavigateCategories }) {
   return (
     <main>
-      <HeroSection />
+      <HeroSection onNavigateCategories={onNavigateCategories} />
       <CategoriesSection onNavigateCategories={onNavigateCategories} />
       <div id="featured-section">
         <FeaturedSection onAddToCart={onAddToCart} />
