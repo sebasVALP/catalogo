@@ -203,13 +203,9 @@ function FeaturedSection({ onAddToCart, onNavigateProduct }) {
 function CategoryProductGrid({ categoryName, products, onAddToCart, onNavigateProduct }) {
   const sectionId = 'cat-' + categoryName.toLowerCase()
   return (
-    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-40">
+    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-48">
       <div className="flex items-center justify-between mb-8">
         <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white">{categoryName}</h2>
-        <a className="flex items-center space-x-2 font-bold hover:text-yellow-400 transition text-primary" href="#">
-          <span>Ver más</span>
-          <span className="material-symbols-outlined">arrow_forward</span>
-        </a>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
@@ -217,7 +213,7 @@ function CategoryProductGrid({ categoryName, products, onAddToCart, onNavigatePr
             <img alt={product.name} className="w-full aspect-[4/5] object-cover" src={product.img} />
             <div className="p-4 flex justify-between items-end">
               <div>
-                <h3 className="text-xs font-bold uppercase mb-1 text-white">{product.name}</h3>
+                <h3 className="font-title-md text-xs font-bold uppercase mb-1 text-white">{product.name}</h3>
                 <p className="text-lg font-black text-primary">{'$' + product.price.toLocaleString('es-CO')}</p>
               </div>
               <button
@@ -245,7 +241,7 @@ function WhyBuySection() {
   return (
     <section className="bg-surface-container-lowest py-24 topographic-bg border-t border-b border-outline-variant">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-        <h2 className="font-headline-lg text-headline-lg mb-16 uppercase tracking-tight text-white">¿POR QUÉ COMPRAR EN STOREBASS?</h2>
+        <h2 className="font-headline-lg text-headline-lg mb-16 uppercase border-l-4 border-primary pl-6 text-white text-left">¿POR QUÉ COMPRAR EN STOREBASS?</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
           {items.map((item) => (
             <div key={item.icon} className="flex flex-col items-center gap-4">
@@ -307,7 +303,7 @@ function FooterSection({ onNavigateCategories }) {
   )
 }
 
-function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onCheckout, formatPrice }) {
+function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onCheckout, onNavigateCategories, formatPrice }) {
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
@@ -335,7 +331,7 @@ function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onChe
               <Icon name="shopping_bag" className="text-6xl text-secondary opacity-50" />
               <p className="font-title-md text-white uppercase">Tu carrito está vacío</p>
               <p className="text-white/60 text-sm max-w-xs">¡Agrega pines, llaveros o gorras para darle estilo a tu outfit!</p>
-              <button id="btn-cart-empty-catalog" onClick={() => setIsOpen(false)} className="mt-4 bg-primary text-on-primary px-6 py-3 font-headline-lg text-lg uppercase rounded hover:brightness-110 transition-all">
+              <button id="btn-cart-empty-catalog" onClick={() => { setIsOpen(false); onNavigateCategories() }} className="mt-4 bg-primary text-on-primary px-6 py-3 font-headline-lg text-lg uppercase rounded hover:brightness-110 transition-all">
                 Ver Catálogo
               </button>
             </div>
@@ -399,10 +395,7 @@ function InfographicSection() {
           >
             Storebass en cifras
           </span>
-          <h2
-            className="font-headline-lg text-3xl md:text-4xl uppercase mb-4"
-            style={{ color: '#D4D400' }}
-          >
+          <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-left text-white mb-8">
             Nuestro impacto
           </h2>
           <p className="text-white/70 max-w-xl mx-auto mb-10">
@@ -445,16 +438,16 @@ function CategoriesPage({ onAddToCart, onNavigateProduct, scrollToCategory }) {
       setTimeout(() => {
         const el = document.getElementById('cat-' + scrollToCategory.toLowerCase())
         if (el) {
-          const y = el.getBoundingClientRect().top + window.pageYOffset - 100
+          const y = el.getBoundingClientRect().top + window.pageYOffset - 120
           window.scrollTo({ top: y, behavior: 'smooth' })
         }
       }, 100)
     } else {
-      window.scrollTo({ top: 100, behavior: 'smooth' })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [scrollToCategory])
   return (
-    <main>
+    <main className="pt-24">
       {Object.entries(PRODUCTS_BY_CATEGORY).map(([category, products]) => (
         <CategoryProductGrid
           key={category}
@@ -471,6 +464,7 @@ function CategoriesPage({ onAddToCart, onNavigateProduct, scrollToCategory }) {
 function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentComplete }) {
   const [selectedCity, setSelectedCity] = React.useState('Pereira')
   const [showCityDropdown, setShowCityDropdown] = React.useState(false)
+  const [selectedPayment, setSelectedPayment] = React.useState(null)
 
   const colombianCities = [
     'Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena',
@@ -512,19 +506,31 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentComplete }) 
             </div>
             <p className="text-xs text-gray-400 mb-6">Selecciona tu método de pago de preferencia</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+              <button
+                onClick={() => setSelectedPayment('card')}
+                className={`payment-option flex flex-col items-center justify-between p-4 rounded-lg border h-32 transition-all ${selectedPayment === 'card' ? 'border-primary bg-primary/10' : 'border-card-border bg-surface-container-low hover:border-primary'}`}
+              >
                 <Icon name="credit_card" className="text-3xl text-primary" />
                 <span className="text-[10px] text-center text-white">Tarjeta débito o crédito</span>
               </button>
-              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+              <button
+                onClick={() => setSelectedPayment('pse')}
+                className={`payment-option flex flex-col items-center justify-between p-4 rounded-lg border h-32 transition-all ${selectedPayment === 'pse' ? 'border-primary bg-primary/10' : 'border-card-border bg-surface-container-low hover:border-primary'}`}
+              >
                 <span className="text-lg font-bold text-primary">PSE</span>
                 <span className="text-[10px] text-center text-white">Paga seguro con tu banco</span>
               </button>
-              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+              <button
+                onClick={() => setSelectedPayment('paypal')}
+                className={`payment-option flex flex-col items-center justify-between p-4 rounded-lg border h-32 transition-all ${selectedPayment === 'paypal' ? 'border-primary bg-primary/10' : 'border-card-border bg-surface-container-low hover:border-primary'}`}
+              >
                 <span className="text-lg font-bold italic text-primary">PayPal</span>
                 <span className="text-[10px] text-center text-white">Pago con PayPal</span>
               </button>
-              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+              <button
+                onClick={() => setSelectedPayment('cash')}
+                className={`payment-option flex flex-col items-center justify-between p-4 rounded-lg border h-32 transition-all ${selectedPayment === 'cash' ? 'border-primary bg-primary/10' : 'border-card-border bg-surface-container-low hover:border-primary'}`}
+              >
                 <Icon name="payments" className="text-3xl text-primary" />
                 <span className="text-[10px] text-center text-white">Efectivo</span>
               </button>
@@ -578,7 +584,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentComplete }) 
                     <img alt={item.name} className="w-full h-full object-contain" src={item.img} />
                   </div>
                   <div className="flex-grow">
-                    <h3 className="font-headline-lg text-xl uppercase leading-tight text-white">{item.name}</h3>
+                    <h3 className="font-title-md text-xl font-bold uppercase leading-tight text-white">{item.name}</h3>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-xl text-white">{formatPrice(item.price)}</p>
@@ -610,7 +616,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentComplete }) 
         </div>
       </div>
       <section className="mt-24 text-center">
-        <h2 className="font-headline-lg text-4xl uppercase mb-12 text-white">¿Por qué comprar en Storebass?</h2>
+        <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">¿Por qué comprar en Storebass?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
@@ -719,7 +725,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
           </div>
           <div className="space-y-6">
             <div>
-              <h1 className="text-5xl font-black italic tracking-tighter mb-2 uppercase text-white">{product.name}</h1>
+              <h1 className="font-title-md font-bold text-5xl uppercase border-l-4 border-primary pl-6 text-white">{product.name}</h1>
               <div className="flex items-center gap-2 mb-4">
                 <Ratings count={tagline.rating} />
                 <span className="text-sm text-gray-400">({tagline.reviews.toLocaleString('es-CO')} reseñas)</span>
@@ -766,11 +772,8 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
         </div>
         <section className="border-t border-card-border pt-16">
           <div className="flex items-center justify-between mb-10">
-            <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white">Productos Relacionados</h2>
-            <button onClick={() => onNavigateProduct(related[0]?.id)} className="flex items-center gap-2 font-bold text-lg hover:text-primary text-primary">
-              Ver más
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-            </button>
+            <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white">Productos Relacionados</h2>
+
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {related.map((rp) => {
@@ -782,7 +785,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
                   </div>
                   <div className="p-6 flex items-center justify-between">
                     <div>
-                      <h3 className="font-black italic uppercase text-lg leading-tight text-white">{rp.name}</h3>
+                      <h3 className="font-title-md font-bold uppercase text-lg leading-tight text-white">{rp.name}</h3>
                       <p className="text-xl font-bold text-primary">{'$' + rp.price.toLocaleString('es-CO')}</p>
                       {rpTag && <p className="text-xs text-gray-400 line-through">${rpTag.oldPrice.toLocaleString('es-CO')}</p>}
                     </div>
@@ -796,7 +799,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
           </div>
         </section>
         <section className="mt-32 mb-16">
-          <h2 className="text-center text-3xl font-black italic uppercase mb-12 text-white">¿Por qué comprar en Storebass?</h2>
+          <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">¿Por qué comprar en Storebass?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
@@ -835,7 +838,7 @@ function PaymentCompletePage({ cart, formatPrice, onNavigateHome }) {
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3"></path></svg>
             </div>
-            <h1 className="text-4xl font-black italic uppercase tracking-tighter text-white">¡Pago Exitoso!</h1>
+            <h1 className="font-headline-lg text-headline-lg uppercase text-white">¡Pago Exitoso!</h1>
             <p className="text-white/80 mt-2 text-lg">Tu pedido ha sido confirmado</p>
           </div>
           <div className="p-8 space-y-8">
@@ -944,6 +947,7 @@ export default function App() {
         onRemove={removeFromCart}
         onUpdateQuantity={updateQuantity}
         onCheckout={navigateCheckout}
+        onNavigateCategories={navigateCategories}
         formatPrice={formatPrice}
       />
     </div>
