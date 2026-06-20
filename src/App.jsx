@@ -229,9 +229,9 @@ function FeaturedSection({ onAddToCart }) {
 function CategoryProductGrid({ categoryName, products, onAddToCart }) {
   const sectionId = 'cat-' + categoryName.toLowerCase()
   return (
-    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-28">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">{categoryName}</h2>
+        <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white">{categoryName}</h2>
         <a className="flex items-center space-x-2 font-bold hover:text-yellow-400 transition text-primary" href="#">
           <span>Ver más</span>
           <span className="material-symbols-outlined">arrow_forward</span>
