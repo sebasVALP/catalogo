@@ -46,7 +46,7 @@ function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories
     <header className="bg-surface/90 backdrop-blur-md border-b border-outline-variant fixed top-0 z-50 w-full">
       <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
         <button id="brand-logo" onClick={onNavigateHome} className="font-headline-lg text-headline-lg text-primary uppercase italic tracking-tighter bg-transparent border-none cursor-pointer">Storebass</button>
-        <nav className="hidden md:flex gap-gutter">
+        <nav className="hidden md:flex gap-6">
           <button id="nav-home" onClick={onNavigateHome} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'home' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>HOME</button>
           <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÍAS</button>
         </nav>
@@ -85,7 +85,7 @@ function HeroSection() {
             <button id="btn-hero-catalog" className="bg-primary text-on-primary px-8 py-3.5 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center gap-3 rounded">
               VER CATÁLOGO
               <Icon name="arrow_forward" className="text-xl" />
-
+            </button>
           </div>
         </div>
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden">
