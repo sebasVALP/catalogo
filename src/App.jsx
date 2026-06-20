@@ -49,7 +49,6 @@ function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories
         <nav className="hidden md:flex gap-gutter">
           <button id="nav-home" onClick={onNavigateHome} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'home' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>HOME</button>
           <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÍAS</button>
-          <button id="nav-promotions" className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'promotions' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>PROMOCIONES</button>
         </nav>
         <div className="flex items-center gap-4">
           <div className="relative hidden sm:block group">
@@ -86,10 +85,7 @@ function HeroSection() {
             <button id="btn-hero-catalog" className="bg-primary text-on-primary px-8 py-3.5 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center gap-3 rounded">
               VER CATÁLOGO
               <Icon name="arrow_forward" className="text-xl" />
-            </button>
-            <button id="btn-hero-promotions" className="bg-transparent border-2 border-white/60 text-white px-8 py-3.5 font-headline-lg text-xl uppercase hover:border-primary hover:text-primary active:scale-95 transition-all rounded">
-              PROMOCIONES %
-            </button>
+
           </div>
         </div>
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden">
@@ -158,30 +154,6 @@ function CategoriesSection({ onNavigateCategories }) {
             </div>
           </button>
         ))}
-      </div>
-    </section>
-  )
-}
-
-function PromotionBanner() {
-  return (
-    <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop my-section-gap">
-      <div className="bg-primary relative overflow-hidden flex flex-col md:flex-row items-center justify-between p-8 md:p-12 border border-primary shadow-[0_0_40px_rgba(241,241,50,0.15)] group rounded">
-        <div className="absolute inset-0 topographic-bg pointer-events-none" />
-        <div className="z-10 text-on-primary text-center md:text-left relative">
-          <span className="font-label-sm text-label-sm tracking-widest uppercase mb-2 block opacity-80">PROMOCIÓN DEL MES</span>
-          <h2 className="font-display-xl text-5xl md:text-7xl mb-2">30% OFF</h2>
-          <p className="font-title-md text-title-md uppercase">en pines seleccionados</p>
-        </div>
-        <div className="relative h-48 w-full md:w-1/3 flex justify-center items-center my-8 md:my-0 z-10">
-          <img className="h-full object-contain rotate-[-5deg] group-hover:rotate-0 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD93Pk7otcprfu4ILthCJFY3Kz31JlTxmgE3ywXXuK35cClspzFVSWXmsvoe4-0e7g95qel9AjCAdvAhLDBz2t8eeozcIBuDYbwO-NLwyY5PDevd8ogt93D3RyxHBIi3zNo4usujHTOjE1YUjhJPEg6_w7oEA2_NrtpEw1XRz7-k6VhvIvjbjy71M4IQH6H3akG6aNRAlUHINExPxIGDU5KGd_kHEkcaXagulUZKjThVtaEZMYJlAuSdbRpBIflbtcJqurlPgCA1CSf" alt="Promoción 30% OFF" />
-        </div>
-        <div className="z-10 relative">
-          <button id="btn-promo-offer" className="bg-surface text-white px-10 py-4 font-headline-lg text-2xl uppercase hover:bg-surface-bright transition-colors flex items-center gap-3 rounded">
-            VER OFERTA
-            <Icon name="arrow_forward" />
-          </button>
-        </div>
       </div>
     </section>
   )
@@ -501,7 +473,6 @@ function HomePage({ onAddToCart, onNavigateCategories }) {
     <main>
       <HeroSection />
       <CategoriesSection onNavigateCategories={onNavigateCategories} />
-      <PromotionBanner />
       <div id="featured-section">
         <FeaturedSection onAddToCart={onAddToCart} />
       </div>
