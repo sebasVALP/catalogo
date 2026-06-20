@@ -47,6 +47,7 @@ function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories
       <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
         <button id="brand-logo" onClick={onNavigateHome} className="font-headline-lg text-headline-lg text-primary uppercase italic tracking-tighter bg-transparent border-none cursor-pointer">Storebass</button>
         <nav className="hidden md:flex gap-gutter">
+          <button id="nav-home" onClick={onNavigateHome} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'home' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>HOME</button>
           <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÍAS</button>
           <button id="nav-promotions" className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'promotions' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>PROMOCIONES</button>
         </nav>
