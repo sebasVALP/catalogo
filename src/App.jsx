@@ -471,6 +471,15 @@ function CategoriesPage({ onAddToCart, scrollToCategory }) {
 }
 
 function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
+  const [selectedCity, setSelectedCity] = React.useState('Pereira')
+  const [showCityDropdown, setShowCityDropdown] = React.useState(false)
+
+  const colombianCities = [
+    'Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena',
+    'Bucaramanga', 'Pereira', 'Manizales', 'Armenia', 'Cúcuta',
+    'Ibagué', 'Villavicencio', 'Santa Marta', 'Neiva', 'Popayán',
+  ]
+
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0)
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = subtotal > 0 ? 8000 : 0
@@ -505,16 +514,22 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
             </div>
             <p className="text-xs text-gray-400 mb-6">Selecciona tu método de pago de preferencia</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-              {['credit_card', 'account_balance', 'paypal', 'payments'].map((method) => (
-                <button key={method} className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
-                  <Icon name={method} className="text-3xl text-primary" />
-                  <span className="text-[10px] text-center text-white">
-                    {method === 'credit_card' ? 'Tarjeta débito o crédito' :
-                     method === 'account_balance' ? 'PSE' :
-                     method === 'paypal' ? 'PayPal' : 'Efectivo'}
-                  </span>
-                </button>
-              ))}
+              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+                <Icon name="credit_card" className="text-3xl text-primary" />
+                <span className="text-[10px] text-center text-white">Tarjeta débito o crédito</span>
+              </button>
+              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+                <span className="text-lg font-bold text-primary">PSE</span>
+                <span className="text-[10px] text-center text-white">Paga seguro con tu banco</span>
+              </button>
+              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+                <span className="text-lg font-bold italic" style={{ color: '#003087' }}>Pay</span>
+                <span className="text-[10px] text-center text-white">Pago con PayPal</span>
+              </button>
+              <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
+                <Icon name="payments" className="text-3xl text-primary" />
+                <span className="text-[10px] text-center text-white">Efectivo</span>
+              </button>
             </div>
             <div className="space-y-4">
               <input className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Número de la tarjeta" type="text" />
@@ -524,12 +539,27 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
                 <input className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Titular de la tarjeta" type="text" />
               </div>
             </div>
-            <div className="mt-6 bg-surface-container-low border border-primary/30 rounded-lg p-4 flex justify-between items-center">
-              <div className="flex flex-col">
-                <p className="text-xs text-white"><span className="text-primary font-bold">Envío a</span> Pereira</p>
-                <p className="text-[10px] text-gray-400">Entrega estimada de 2 a 5 días</p>
+            <div className="mt-6 bg-surface-container-low border border-primary/30 rounded-lg p-4 relative">
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col">
+                  <p className="text-xs text-white"><span className="text-primary font-bold">Envío a</span> {selectedCity}</p>
+                  <p className="text-[10px] text-gray-400">Entrega estimada de 2 a 5 días</p>
+                </div>
+                <button onClick={() => setShowCityDropdown(!showCityDropdown)} className="text-primary font-bold text-sm">Cambiar</button>
               </div>
-              <button className="text-primary font-bold text-sm">Cambiar</button>
+              {showCityDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-elevated-gray border border-card-border rounded-lg shadow-xl z-20 max-h-48 overflow-y-auto">
+                  {colombianCities.map((city) => (
+                    <button
+                      key={city}
+                      onClick={() => { setSelectedCity(city); setShowCityDropdown(false) }}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-surface-container-high transition-colors ${city === selectedCity ? 'text-primary font-bold' : 'text-white'}`}
+                    >
+                      {city}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="mt-6 flex items-center gap-3">
               <input checked type="checkbox" className="rounded bg-transparent border-gray-500 text-primary focus:ring-primary" />
