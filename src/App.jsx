@@ -523,7 +523,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
                 <span className="text-[10px] text-center text-white">Paga seguro con tu banco</span>
               </button>
               <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
-                <span className="text-lg font-bold italic" style={{ color: '#003087' }}>Pay</span>
+                <span className="text-lg font-bold italic text-primary">PayPal</span>
                 <span className="text-[10px] text-center text-white">Pago con PayPal</span>
               </button>
               <button className="payment-option flex flex-col items-center justify-between p-4 rounded-lg border border-card-border bg-surface-container-low h-32 hover:border-primary transition-all">
