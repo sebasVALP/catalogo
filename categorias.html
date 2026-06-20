@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Storebass - Categorías</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+  </style>
+<style data-purpose="layout-styling">
+    /* Subtle background pattern to match the screenshot's texture */
+    .bg-pattern {
+      background-image: radial-gradient(circle at 2px 2px, #1a1a1a 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+    
+    .product-card {
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .yellow-accent {
+      color: #e2f52e;
+    }
+
+    .bg-yellow-accent {
+      background-color: #e2f52e;
+    }
+  </style>
+</head>
+<body class="bg-pattern min-h-screen">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 bg-[#121212] border-b border-gray-800 py-4 px-6">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<!-- Logo Section -->
+<div class="flex items-center space-x-8">
+<div class="text-2xl font-black italic tracking-tighter" data-purpose="brand-logo">
+          STORE<span class="yellow-accent">BASS</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex space-x-6 uppercase text-sm font-bold tracking-wide">
+<a class="border-b-2 border-yellow-400 pb-1" href="#">Categorías</a>
+<a class="text-gray-400 hover:text-white transition" href="#">Promociones</a>
+</nav>
+</div>
+<!-- Search and Cart -->
+<div class="flex items-center space-x-6 flex-1 max-w-md mx-8">
+<div class="relative w-full">
+<input class="w-full bg-[#1e1e1e] border-none rounded-full py-2 px-4 pr-10 text-sm focus:ring-1 focus:ring-yellow-400" placeholder="¿Qué deseas comprar?" type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+<i class="fa-solid fa-magnifying-glass"></i>
+</button>
+</div>
+<div class="relative cursor-pointer">
+<i class="fa-solid fa-cart-shopping text-xl"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-16">
+<!-- BEGIN: LlaverosSection -->
+<section data-purpose="category-section">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-black italic uppercase tracking-tighter">Llaveros</h2>
+<a class="flex items-center space-x-2 font-bold hover:text-yellow-400 transition" href="#">
+<span>Ver más</span>
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl" data-purpose="product-item">
+<img alt="Turbo Tunning" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLjGOS2-LJxLdaNK197bVz_FeUNCiECdiVyip-ItMesZBYkJIDMgniGiZD6Bf7_yj2X6h73ejErv8am4S18u4Fzj1rOyBzDr6UtUBA-1e66iE3uHY3nJlwpoSV0elbLX81B6BT1kinE8YCz4YMuxdXS7BVAPBupiSwKuzY52ap5R5RiV0suJqdw8Zdlwcxd_gCC-zr--LyniEOCS4hiw7ft6fs5cxv6Q38IbLYQ8ZUs927wuBZMWFoKUo2dt10_c4ohB-UO8J4Fi_U"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Turbo Tunning</h3>
+<p class="text-lg font-black">$15.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Espiral Tunning" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAZy-x1v-QOSoPIfk0imJrQVQtFzost2TAUh6FpApOYKscQxMmDkApaWbx5xpD1CeWb2IdXkAN_i8r3ZhAc9DZKmuUBuW5HpJfMxwGVrNawyNnq8N-yhwg8tDdbn4ZyKLsoMQooOWX17T0m3Pv_KOdRMaOFyxR6p_FECGgn9lEeeTVejEfBMRdN8rrh6k03M1knPl1WN7s-8Fr9yYk4f0bZs4gapXVvYLQC1QhuX-tx9dTEGEq_fVGJBEd5TyeFKjXY5666igVUrUF"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Espiral Tunning</h3>
+<p class="text-lg font-black">$15.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="F1 Hard Tire" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfuzxTqbQQOHz_cULBriWJL_7lG8H2Ldbdb6_9NldVPA4clLhch1lCbEud8tbbM7-L5kiuVk6cUw_Y0_0hja7FB8O849EZScK8630rGy1M3SLRvvf9khc6trUwjgQ1QH5-FeHmxEWFmKbtfuAvzVLtE-Zu-5vYIN5aJDk6A6TQ7zgYOA6534dKQ3yZdKkNNoiffTDvroLwakJGfaRWIKElOwDGiHbMQE2OmHmpMgqrPO-yMFtghtr1YCGpeZnlRGC_FEY2yz6CChA2"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">F1 Hard Tire</h3>
+<p class="text-lg font-black">$15.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Placa JDM" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_vuRoXiXeouuv4a7rNGqvn4if5u4stWwYWrM1R5hYHzWZT-1l4YNS9T_iX3ehA_CS9x8rOj2WBTNQ44JWoC7As0X5hbj55v3NI7Z2_OYQIbGNT1itlEsukThPudrV_sqVbGyOsaXnxts9G3aIuLAXMjZbqv9HboJyGfqr_XejfAGhmi7tMuymAFJyDmB_5b1pcx8aKaWO8vNZy5Ip4A8AhId-aEP4GRf5G72zV1TJWYvyg8ofTO6mjmpwFDCDLyI-yHpZQVqALSlt"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Placa JDM</h3>
+<p class="text-lg font-black">$15.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: LlaverosSection -->
+<!-- BEGIN: PinesSection -->
+<section data-purpose="category-section">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-black italic uppercase tracking-tighter">Pines</h2>
+<a class="flex items-center space-x-2 font-bold hover:text-yellow-400 transition" href="#">
+<span>Ver más</span>
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Mario Party" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZVeBuoc0q72wbbAr1uG2AaM3jffTU4uxMZ6g3yrEJ2NHfVokuQKoCa9IqE5KO1fG4mWEf9sHWSVdyY_qSBtaCNJteU1grfPSsbcXHjngflvKbvDsyCV-zcl1wH7tYYVPRzrDeU6zxModj6vGJrZO2WteogI37mI1d0FqTZ_vZoXrCxG3cMKgr2cWoKs5t4yplN_sY1K8ACQZlY9-Zw495klghXhiZCwmuvs8b6KeXbanvmoxR--7otL7EqSruNFi-NymVmZWPTG5q"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Mario Party</h3>
+<p class="text-lg font-black">$14.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Bateria" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLdxZslRiyIvQRRoD7JJzBqvbEh_EPR9eRg43OyG6u_emiJrIZEfR1mD8XgVyVuz7ZaT6NNZllsAWktqp--FTS9RdNirKngJPdtL2iOGR2deZBQ6kwc9_x-_8mGiYkDFdOWliyYWPp6YXHwddRGqM8V6oay5Te7RoKboYcgES7SYhXQQkL1K7MgJsYOLBSFUD_jpHKyX5JQvz3Fab9rGp8DXNhutIRcB2GgKJkWPx7D8nVapoSzpQCEZ4vRJCI675FtRWvUaeX6pnv"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Batería de Paciencia</h3>
+<p class="text-lg font-black">$12.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Ew People Cat" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmlMQU1gPb6yPh1LCpDYfEnSEj5khD_zxf5vjMADib0AocVwsD64qroZ2HgeoEa0LRJS25PR7wG3lyM7eWaXJfICkSPYbCgOyS_ZM1PoCTT4m3juLGmgluSkuoa0hZk0lkApmWVNW4qBkPhfM98Gb3quvsvkR_q9P7C0WToiMNByfmq0qAktpHJVqDnUNOsc_dSeTYVd73_QackT7ZuzkY0hrBqTQQwKHLvwhN61XXMbpyGRV3TXMtKi6VQiYcfpAnxHbOYPcFLPL5"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Ew People Cat</h3>
+<p class="text-lg font-black">$12.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Betty La Fea" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJcNyLO3UtnlXH_wzsSWLyZN-nviYiMLQ9tC7foDILF623OWHMobjUQwypn2asEulFhkXJ5faETvgvwcqYxu0FFy0g7fSGRxdgpJZmVvhDAPYpAOBROWo4ZClkxuq2QaZwT3BhpDuKOTvMCsihxlmGW1qIjinhYxQGCM1v2iBJtqN5tcNhNrcg6jr4yzBBo9qJp13MAE_JMQ_for4lP_nOxRQUrDkmayFFyt8a3crCIeZqJLTAkrt1kUQGTWUjNTmCygVn2gjd5iAj"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Betty La Fea</h3>
+<p class="text-lg font-black">$15.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: PinesSection -->
+<!-- BEGIN: GorrasSection -->
+<section data-purpose="category-section">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-black italic uppercase tracking-tighter">Gorras</h2>
+<a class="flex items-center space-x-2 font-bold hover:text-yellow-400 transition" href="#">
+<span>Ver más</span>
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Tommy Black" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuKtTq-3RgZF5G1KJ7e9HFJWVtRP2-QuJN9KBPRzF8U53P1hXtF2TkCIJJ3i2Vzx08KIfivDV87tLixqXZC-54FdYE_OT97PQjRgUPFgswj9tSZkymIyzFdsHbD2OoB2ivvVGPbYupO4O0nyLwX0MV2Im-eZx4pvJI21LQ5HsmbjY9Zht7tG9BfQLl37GDWlOoCv-LP6kFRZju6gqSY490FF2f2ROGUeGStERdSFXD2mkM9BA6vc2LZ_fR9aNFWpr_Abg6j0U7xSOo"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Tommy Black</h3>
+<p class="text-lg font-black">$50.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="New York" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCApy1FL-0P4VFOUd2TEWeYYRfG7MLmOEFEOwH9wtjY1Ovey1iU1SQaWQRb3WguIzxZnkxsT3JxbaQNpV_mKbZl04176_3OLvnihab-o_ZYlXLIKCjz7G1b1F3LUjYBgaAPzoa2WnFaY-Dh029ooZ3qxBLSCWuO6HcbSB4MMgm2o_uoIDzgijETumBXDQ4cFklfLcoimsVEIlHVgFia_UOYbMTa1D3JSMsZ8hT-512mnSQclnr7Uq8N6gZxRKOWR_j0FrsKVDrmmQzY"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">New York</h3>
+<p class="text-lg font-black">$50.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Tommy Hilfiger" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcd1hz4PW0DC_vt4ZDgAVUKultldiIYfzb8LwoEOYnz9BiHFgqpaZSpHfrVRg94vbgUFymG1jEBF5ghCsW5n1v9bPG1ptQYFtjTydbVRSvPKOLYuDdaaKdGaOaT3YLvUtLAInJhJbw3XodHZLvm_ZiTESMyQjdWqtF141jI1ZAmnqG-Si6VW2eIadw8ZF5_LaZM0btUPSuYuqFLDEXYA5Iq3Z_nIjpc_BaUvEsJPx7Go9RaApoSlvobQRV6CxkPcm1z71sbwRzkUbI"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Tommy Hilfiger</h3>
+<p class="text-lg font-black">$50.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Colombia" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD2Zql8-oDXi7n8XVe-ns46MMcLLTNbW9KePJhYBnmBnjihY-t5ujGfZH41R_Emie3nZuNfZWEYZVgf2xIbjNw5EM3feRKWyjfoHulIV6Z3Q2JaJEuNvT6xuKMyiN_xLJnHHseoBo6NCIjf1HzvleGD-GWsNJKBL0tGkv3sniu9Sq2pygNRVm1HswF2g_EaT1xbowuyFseQXdKr6oBPe5dx3XEH0vmYE65OUBDYgmCyIhAmInGVfNXnkqLjgED-rvFUPw6ITCXbu7O"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Colombia</h3>
+<p class="text-lg font-black">$50.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: GorrasSection -->
+<!-- BEGIN: MediasSection -->
+<section data-purpose="category-section">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-black italic uppercase tracking-tighter">Medias</h2>
+<a class="flex items-center space-x-2 font-bold hover:text-yellow-400 transition" href="#">
+<span>Ver más</span>
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-12">
+<!-- Product 1 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Gatos" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1ArN8ccpObULS7bPQqcIiT1CRzaEx4J1iMZ7frdnkogAH3n2JYGYi8dN6XHfXwIlD7hvaMPkNKQZFBqdrxRMr3PB3h-EY74ELGj-7NdZuePaqr3mKC0rsGueGdEzvPzOPYjodcg5m2w9aRSDR7L9nOkplwVMs5cP18QpuB-KGbmLxPTZ9d5cll1SzRsu8D9racPAiy6eMER1ZY39hzm8zolFV3eJs0_Oj9WmqXAgD3L9GneF8l-BUMjEgsdLZ-Ay1jJtYFt8RQQ1g"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Gatos</h3>
+<p class="text-lg font-black">$7.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Comida Rapida" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Qc_D_Gm1e_kiYKG-V9HjwzH9sfRv0f-y0PXD9EVoXUBB8UxJ2wAlna9jJ0vaKa72JeysEszPSDUitIc-R7Hisxh99RvS9lQkyjST1V7z834jppNOepEXLhwLdOlKg1nnsUEmdwASlJrTnKIxC1CCRwv7A_eXcOjdhaz8Dt7Dqy5-QdE0uRcdnrkOunM68pW5gD0VxXsyS50tMpRBLu57e3YEg0BPnfRvgaiSCacksL81KwWhj666DTxoXKY3z0MMVLKB_tzVd-i1"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Comida Rápida</h3>
+<p class="text-lg font-black">$7.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Aguacate" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPOszW0Ojgbl0IRnK-iJGNOiqJZm71TFV1C6IGCBhPZ5FAotSG-CFmLRuFSzNQWh5erVMyvByNutuwldWcw5Er-ZoysmlUZnoTkfwyZjuj54CsXNIUqsx986yyvVYPYBssxXoVRLAEIzFzbzKKvTuokTlDI1Xwv5M-ZSmyeSRZBEIfN4ola9u-Igj76wPJ4BSNsWNMFXJ9DuxW38JEsKFAGOslvdx3SzURWOr68av3jG_a0WSUxRwBalSuAj7Fb_E1g8UCUzw83Dqn"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Aguacate</h3>
+<p class="text-lg font-black">$7.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
+<img alt="Patos" class="w-full aspect-[4/5] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk-CGvXwTbAjHl2sttzkhsgb_O2i7E4lv7m_-An3h9yelhYjLK1wlR37F5OlAtgVxLm-kFMLujwnEm1yFnxr3G4tcXo1JYLy8jnuiHTdYmKm9cDOzzWWYKlEh3exOqsilKJ7L9FkEM6jIFcXFnJlniNRZW9dcauSLPCvVViCCBz_sFB0Q7fX0U-SKS06pe2X1yknTTCrtEPJI320dMDHo09p4BzYqLbPb5gfq_uP8SiaYafnVKCZ32IH6FrhI98CENk69cJgUgOL9S"/>
+<div class="p-4 flex justify-between items-end">
+<div>
+<h3 class="text-xs font-bold uppercase mb-1">Patos</h3>
+<p class="text-lg font-black">$7.000</p>
+</div>
+<button class="bg-yellow-accent text-black p-2 rounded-lg hover:brightness-110 transition">
+<i class="fa-solid fa-cart-shopping text-sm"></i>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MediasSection -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="bg-black py-8 px-6 border-t border-gray-900">
+<div class="max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-8 md:gap-16">
+<div class="flex items-center space-x-3">
+<i class="fa-brands fa-whatsapp text-xl"></i>
+<span class="font-bold text-sm tracking-tight">305 3572974</span>
+</div>
+<div class="flex items-center space-x-3">
+<i class="fa-brands fa-instagram text-xl"></i>
+<span class="font-bold text-sm tracking-tight">storebass_col</span>
+</div>
+<div class="flex items-center space-x-3">
+<i class="fa-solid fa-location-dot text-xl"></i>
+<span class="font-bold text-sm tracking-tight">Cra. 16 #10-56</span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+</body></html>

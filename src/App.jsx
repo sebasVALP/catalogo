@@ -1,14 +1,42 @@
 import { useCallback } from 'react'
 import { useCart } from './hooks/useCart'
 
-const PRODUCTS = [
+const PRODUCTS_BY_CATEGORY = {
+  Llaveros: [
+    { id: 'llav-1', name: 'Turbo Tunning', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLjGOS2-LJxLdaNK197bVz_FeUNCiECdiVyip-ItMesZBYkJIDMgniGiZD6Bf7_yj2X6h73ejErv8am4S18u4Fzj1rOyBzDr6UtUBA-1e66iE3uHY3nJlwpoSV0elbLX81B6BT1kinE8YCz4YMuxdXS7BVAPBupiSwKuzY52ap5R5RiV0suJqdw8Zdlwcxd_gCC-zr--LyniEOCS4hiw7ft6fs5cxv6Q38IbLYQ8ZUs927wuBZMWFoKUo2dt10_c4ohB-UO8J4Fi_U' },
+    { id: 'llav-2', name: 'Espiral Tunning', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDAZy-x1v-QOSoPIfk0imJrQVQtFzost2TAUh6FpApOYKscQxMmDkApaWbx5xpD1CeWb2IdXkAN_i8r3ZhAc9DZKmuUBuW5HpJfMxwGVrNawyNnq8N-yhwg8tDdbn4ZyKLsoMQooOWX17T0m3Pv_KOdRMaOFyxR6p_FECGgn9lEeeTVejEfBMRdN8rrh6k03M1knPl1WN7s-8Fr9yYk4f0bZs4gapXVvYLQC1QhuX-tx9dTEGEq_fVGJBEd5TyeFKjXY5666igVUrUF' },
+    { id: 'llav-3', name: 'F1 Hard Tire', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDfuzxTqbQQOHz_cULBriWJL_7lG8H2Ldbdb6_9NldVPA4clLhch1lCbEud8tbbM7-L5kiuVk6cUw_Y0_0hja7FB8O849EZScK8630rGy1M3SLRvvf9khc6trUwjgQ1QH5-FeHmxEWFmKbtfuAvzVLtE-Zu-5vYIN5aJDk6A6TQ7zgYOA6534dKQ3yZdKkNNoiffTDvroLwakJGfaRWIKElOwDGiHbMQE2OmHmpMgqrPO-yMFtghtr1YCGpeZnlRGC_FEY2yz6CChA2' },
+    { id: 'llav-4', name: 'Placa JDM', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_vuRoXiXeouuv4a7rNGqvn4if5u4stWwYWrM1R5hYHzWZT-1l4YNS9T_iX3ehA_CS9x8rOj2WBTNQ44JWoC7As0X5hbj55v3NI7Z2_OYQIbGNT1itlEsukThPudrV_sqVbGyOsaXnxts9G3aIuLAXMjZbqv9HboJyGfqr_XejfAGhmi7tMuymAFJyDmB_5b1pcx8aKaWO8vNZy5Ip4A8AhId-aEP4GRf5G72zV1TJWYvyg8ofTO6mjmpwFDCDLyI-yHpZQVqALSlt' },
+  ],
+  Pines: [
+    { id: 'pin-1', name: 'Mario Party', price: 14000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZVeBuoc0q72wbbAr1uG2AaM3jffTU4uxMZ6g3yrEJ2NHfVokuQKoCa9IqE5KO1fG4mWEf9sHWSVdyY_qSBtaCNJteU1grfPSsbcXHjngflvKbvDsyCV-zcl1wH7tYYVPRzrDeU6zxModj6vGJrZO2WteogI37mI1d0FqTZ_vZoXrCxG3cMKgr2cWoKs5t4yplN_sY1K8ACQZlY9-Zw495klghXhiZCwmuvs8b6KeXbanvmoxR--7otL7EqSruNFi-NymVmZWPTG5q' },
+    { id: 'pin-2', name: 'Batería de Paciencia', price: 12000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLdxZslRiyIvQRRoD7JJzBqvbEh_EPR9eRg43OyG6u_emiJrIZEfR1mD8XgVyVuz7ZaT6NNZllsAWktqp--FTS9RdNirKngJPdtL2iOGR2deZBQ6kwc9_x-_8mGiYkDFdOWliyYWPp6YXHwddRGqM8V6oay5Te7RoKboYcgES7SYhXQQkL1K7MgJsYOLBSFUD_jpHKyX5JQvz3Fab9rGp8DXNhutIRcB2GgKJkWPx7D8nVapoSzpQCEZ4vRJCI675FtRWvUaeX6pnv' },
+    { id: 'pin-3', name: 'Ew People Cat', price: 12000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCmlMQU1gPb6yPh1LCpDYfEnSEj5khD_zxf5vjMADib0AocVwsD64qroZ2HgeoEa0LRJS25PR7wG3lyM7eWaXJfICkSPYbCgOyS_ZM1PoCTT4m3juLGmgluSkuoa0hZk0lkApmWVNW4qBkPhfM98Gb3quvsvkR_q9P7C0WToiMNByfmq0qAktpHJVqDnUNOsc_dSeTYVd73_QackT7ZuzkY0hrBqTQQwKHLvwhN61XXMbpyGRV3TXMtKi6VQiYcfpAnxHbOYPcFLPL5' },
+    { id: 'pin-4', name: 'Betty La Fea', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAJcNyLO3UtnlXH_wzsSWLyZN-nviYiMLQ9tC7foDILF623OWHMobjUQwypn2asEulFhkXJ5faETvgvwcqYxu0FFy0g7fSGRxdgpJZmVvhDAPYpAOBROWo4ZClkxuq2QaZwT3BhpDuKOTvMCsihxlmGW1qIjinhYxQGCM1v2iBJtqN5tcNhNrcg6jr4yzBBo9qJp13MAE_JMQ_for4lP_nOxRQUrDkmayFFyt8a3crCIeZqJLTAkrt1kUQGTWUjNTmCygVn2gjd5iAj' },
+  ],
+  Gorras: [
+    { id: 'gor-1', name: 'Tommy Black', price: 50000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDuKtTq-3RgZF5G1KJ7e9HFJWVtRP2-QuJN9KBPRzF8U53P1hXtF2TkCIJJ3i2Vzx08KIfivDV87tLixqXZC-54FdYE_OT97PQjRgUPFgswj9tSZkymIyzFdsHbD2OoB2ivvVGPbYupO4O0nyLwX0MV2Im-eZx4pvJI21LQ5HsmbjY9Zht7tG9BfQLl37GDWlOoCv-LP6kFRZju6gqSY490FF2f2ROGUeGStERdSFXD2mkM9BA6vc2LZ_fR9aNFWpr_Abg6j0U7xSOo' },
+    { id: 'gor-2', name: 'New York', price: 50000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCApy1FL-0P4VFOUd2TEWeYYRfG7MLmOEFEOwH9wtjY1Ovey1iU1SQaWQRb3WguIzxZnkxsT3JxbaQNpV_mKbZl04176_3OLvnihab-o_ZYlXLIKCjz7G1b1F3LUjYBgaAPzoa2WnFaY-Dh029ooZ3qxBLSCWuO6HcbSB4MMgm2o_uoIDzgijETumBXDQ4cFklfLcoimsVEIlHVgFia_UOYbMTa1D3JSMsZ8hT-512mnSQclnr7Uq8N6gZxRKOWR_j0FrsKVDrmmQzY' },
+    { id: 'gor-3', name: 'Tommy Hilfiger', price: 50000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCcd1hz4PW0DC_vt4ZDgAVUKultldiIYfzb8LwoEOYnz9BiHFgqpaZSpHfrVRg94vbgUFymG1jEBF5ghCsW5n1v9bPG1ptQYFtjTydbVRSvPKOLYuDdaaKdGaOaT3YLvUtLAInJhJbw3XodHZLvm_ZiTESMyQjdWqtF141jI1ZAmnqG-Si6VW2eIadw8ZF5_LaZM0btUPSuYuqFLDEXYA5Iq3Z_nIjpc_BaUvEsJPx7Go9RaApoSlvobQRV6CxkPcm1z71sbwRzkUbI' },
+    { id: 'gor-4', name: 'Colombia', price: 50000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCD2Zql8-oDXi7n8XVe-ns46MMcLLTNbW9KePJhYBnmBnjihY-t5ujGfZH41R_Emie3nZuNfZWEYZVgf2xIbjNw5EM3feRKWyjfoHulIV6Z3Q2JaJEuNvT6xuKMyiN_xLJnHHseoBo6NCIjf1HzvleGD-GWsNJKBL0tGkv3sniu9Sq2pygNRVm1HswF2g_EaT1xbowuyFseQXdKr6oBPe5dx3XEH0vmYE65OUBDYgmCyIhAmInGVfNXnkqLjgED-rvFUPw6ITCXbu7O' },
+  ],
+  Medias: [
+    { id: 'med-1', name: 'Gatos', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1ArN8ccpObULS7bPQqcIiT1CRzaEx4J1iMZ7frdnkogAH3n2JYGYi8dN6XHfXwIlD7hvaMPkNKQZFBqdrxRMr3PB3h-EY74ELGj-7NdZuePaqr3mKC0rsGueGdEzvPzOPYjodcg5m2w9aRSDR7L9nOkplwVMs5cP18QpuB-KGbmLxPTZ9d5cll1SzRsu8D9racPAiy6eMER1ZY39hzm8zolFV3eJs0_Oj9WmqXAgD3L9GneF8l-BUMjEgsdLZ-Ay1jJtYFt8RQQ1g' },
+    { id: 'med-2', name: 'Comida Rápida', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_Qc_D_Gm1e_kiYKG-V9HjwzH9sfRv0f-y0PXD9EVoXUBB8UxJ2wAlna9jJ0vaKa72JeysEszPSDUitIc-R7Hisxh99RvS9lQkyjST1V7z834jppNOepEXLhwLdOlKg1nnsUEmdwASlJrTnKIxC1CCRwv7A_eXcOjdhaz8Dt7Dqy5-QdE0uRcdnrkOunM68pW5gD0VxXsyS50tMpRBLu57e3YEg0BPnfRvgaiSCacksL81KwWhj666DTxoXKY3z0MMVLKB_tzVd-i1' },
+    { id: 'med-3', name: 'Aguacate', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPOszW0Ojgbl0IRnK-iJGNOiqJZm71TFV1C6IGCBhPZ5FAotSG-CFmLRuFSzNQWh5erVMyvByNutuwldWcw5Er-ZoysmlUZnoTkfwyZjuj54CsXNIUqsx986yyvVYPYBssxXoVRLAEIzFzbzKKvTuokTlDI1Xwv5M-ZSmyeSRZBEIfN4ola9u-Igj76wPJ4BSNsWNMFXJ9DuxW38JEsKFAGOslvdx3SzURWOr68av3jG_a0WSUxRwBalSuAj7Fb_E1g8UCUzw83Dqn' },
+    { id: 'med-4', name: 'Patos', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBk-CGvXwTbAjHl2sttzkhsgb_O2i7E4lv7m_-An3h9yelhYjLK1wlR37F5OlAtgVxLm-kFMLujwnEm1yFnxr3G4tcXo1JYLy8jnuiHTdYmKm9cDOzzWWYKlEh3exOqsilKJ7L9FkEM6jIFcXFnJlniNRZW9dcauSLPCvVViCCBz_sFB0Q7fX0U-SKS06pe2X1yknTTCrtEPJI320dMDHo09p4BzYqLbPb5gfq_uP8SiaYafnVKCZ32IH6FrhI98CENk69cJgUgOL9S' },
+  ],
+}
+
+const ALL_PRODUCTS = Object.values(PRODUCTS_BY_CATEGORY).flat()
+
+const FEATURED_PRODUCTS = [
   { id: 'prod-1', name: 'EW PEOPLE CAT', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYsKWqQC5wFUNzMww0MTtD3PseazdWlUJ_4MiYzdZrhuAVQhWo0epzaz0QuxKktkQ17e2dxE9FEbubAupgtCTHxGyq6bd3G5HjJwU44ZmWtrTYJJEY9GRCxtRpbQ_jYzBK8yvouiforjv0ETAA4a3erkTqY3ftjv6pMjwpfMX5v6IbWDk0_yQvjDFb32hl7nuO-eHLXm3Buy7k73Lae2ckn3j9lQEIBSU5Dl801WXshFIdRjCqQ_7tPlp2ntKcd705gv_NWI2vfEZq', tag: 'Nuevo' },
   { id: 'prod-2', name: 'PLACA JDM', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB179CUtBL4e0ZB6FeMqsflKGnG2BGUDaTjbWXFq5XM4ls98HltRa8UKmO9CRjjGyCzedZJkGnkN5fxVnAep8IUYyjguvGIy_KWSHpzavhhgbgXL8UbPJtYIH6VBHg7IPlsxKPOZgwOgffpjoyIwgoDyvGcQh2IMWeBjnUYl472VixrqwqLzUFV8BSU2E2M69s_9CrGsY5JW0PVlKGl55ZhQ3B5k5tWWVSatsf-JErH4lxebvyaEDsUZUJVwiSrJ_nbUzCiRaARb1Hb', tag: 'Oferta' },
   { id: 'prod-3', name: 'TURBO TUNNING', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5XENUcffnRPc6TEt56iRqeAGYqMVFZf50ihNjaFxzEK-W6CDq4QJQsAfVlI8TQb6qzBoXLslGh_HW6WvCZBopLeDOaOgCHReTx0fO9gGppxIuZPQmAMSqCm_TDRq8Qs8pm395Rp3bUE_3jo-scFOxecJMQUFCtqq6IY0y-vP8xxoKmF6ZdfuJ3SJu_ezl1MbHn6e0R60xalcQ5eztq3hULabcWEXXuY3ZDFOemPaXjqnscX3fw6UmTpQ7ZlgRdvGyxy6WRTQZk7fh' },
   { id: 'prod-4', name: 'TOMMY HILFIGER', price: 50000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCoHPFBNL95ljh54M9vPWGKPmg_okg9PtDeUOviPywJNS7HKvkFRnoKvSF6Zjn_qyvefR__5MQDVXbn32QSXy_kuDeIEuCnksdh7OVGWBXCkp4nWOJh4yqKbRHGWmOdBT8znjNlVmu6qUJL2YRqsJERomFKfdGrwoLuxYaLZwBd7su0no5w2Mwxjz6vysOxlV3d4OTxYhU4LIJm9FGkBCnUEGKVBdn2dbhqTUuZ-tXru2E6BG2dpSo1koiI2JJWajsAgjw2CrGFiQLm', tag: 'Nuevo' },
   { id: 'prod-5', name: 'MARIO PARTY', price: 14000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSsQB3JRRzfjtLJZGCTGfElHzkNVLuZ4xXhQMAjRb0Blo3UruCoEI34i7AxDLDjXB3s1rdRNA5G4WGfcYgp8J_k1gxwSTxB7mg3b_UW1-EvyZF3EKkhZDPpH4z2LcLcG5HMuS9s_zQgXiJYWqOsNrPP69g9Ai2StIYpIzAzXSyUX0TBTOz8YFCCgAq9jXWAIMKUjnz-cdDAvjtyPCAzE6OnC5g4-5HtWXSzRrDlYCBJWZB8TPkQmxtj0OAJyOgoWWiuBlICf4OdZsY' },
 ]
-
 function Icon({ name, className = '' }) {
   return <span className={`material-symbols-outlined ${className}`}>{name}</span>
 }
@@ -186,8 +214,41 @@ function FeaturedSection({ onAddToCart }) {
         <a className="text-primary hover:underline font-title-md uppercase tracking-tight" href="#">Ver todo</a>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        {PRODUCTS.map((product) => (
+        {FEATURED_PRODUCTS.map((product) => (
           <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function CategoryProductGrid({ categoryName, products, onAddToCart }) {
+  return (
+    <section data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">{categoryName}</h2>
+        <a className="flex items-center space-x-2 font-bold hover:text-yellow-400 transition text-primary" href="#">
+          <span>Ver más</span>
+          <span className="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <div key={product.id} className="product-card bg-elevated-gray border border-card-border rounded-xl overflow-hidden shadow-xl" data-purpose="product-item">
+            <img alt={product.name} className="w-full aspect-[4/5] object-cover" src={product.img} />
+            <div className="p-4 flex justify-between items-end">
+              <div>
+                <h3 className="text-xs font-bold uppercase mb-1 text-white">{product.name}</h3>
+                <p className="text-lg font-black text-primary">{'$' + product.price.toLocaleString('es-CO')}</p>
+              </div>
+              <button
+                onClick={() => onAddToCart(product)}
+                className="bg-primary text-on-primary p-2 rounded-lg hover:brightness-110 transition"
+              >
+                <span className="material-symbols-outlined text-sm">shopping_cart</span>
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </section>
@@ -429,6 +490,16 @@ export default function App() {
           <FeaturedSection onAddToCart={addToCart} />
         </div>
         <InfographicSection />
+
+        {Object.entries(PRODUCTS_BY_CATEGORY).map(([category, products]) => (
+          <CategoryProductGrid
+            key={category}
+            categoryName={category}
+            products={products}
+            onAddToCart={addToCart}
+          />
+        ))}
+
         <WhyBuySection />
       </main>
 
