@@ -124,18 +124,21 @@ function CategoriesSection({ onNavigateCategories }) {
       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB4ACkJ0L4YbPh_IH1-BHwH0G4o0uyxi-ivg6RKSOV6E5fIBe-v2Z-UKFL3RSZJuFsgKrDnPqweXtPnZdi-gFqUUcxwiwc_FxSpDR4JTLf5G6wrobEIYONrzxoHnB-Jj7tfN4kTnbnuKsKqPqkjmKrT2hdCKmKVcItF3vAdj8Xmkhc3E6gc3_xrP_3K7vFanTdmowVBd4ncIlAq8_fqIpypDCKTl8zkEwYeCD-WLB1Tj0MplA2XZQJsznrlZhf8fowXBk_TWmwUZP9p',
       tag: '+200 diseños',
       title: 'PINES',
+      slug: 'Pines',
     },
     {
       id: 'category-card-keychains',
       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5HTo0AC4YVdngfg-hSkkuNCDrDpMBCbedePGwwD5qZN2mz8MAyGRizn9dB3OsJWe2oW5u8ZqGH7C9YENeP6GEyre8VUzlzIOjHSqyGPlp-OpifcUZ53AhhH0nEQSdQxqQQbgiOI3GVALVcK6QksYdKAQXCKZQPApVnLInQlNdsHRj_AR9lq1Ew50crn55HOBcvj4Zh_W9ZHc9SgwR2Q2a0-xBiZZGAhkqkRlHp-DCdVSx2be_jxsiDrntXMPgvXgMGmw9FVnESJYd',
       tag: '+50 diseños',
       title: 'LLAVEROS',
+      slug: 'Llaveros',
     },
     {
       id: 'category-card-caps',
       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCNHwQ-VabZ8Sb2byLzolfJP9PB8dVOttZQPqTB3xbSR94V-Q9cFrFqDoXyPeNZ2wNe88TzxsF9Tm7x9x2OF63VWIIRt9N5AHtck7290cPyHImVeAUHgNpAu_VVI8BabEXxA3gIhjpueB1PUqJTlhbYSD92nzBA2_MXMWWu83Nm82RXGtVBx2q7k3q6URVMLDaQQGCaXF3HqhjadGsfnXVtDu8scHA6wrDQ9zP3r7NtcUOK7DdO_i7gZYK1U9HKhlW-rd_AujJeG5vc',
       tag: 'Nuevos estilos',
       title: 'GORRAS',
+      slug: 'Gorras',
     },
   ]
 
@@ -144,7 +147,7 @@ function CategoriesSection({ onNavigateCategories }) {
       <h2 className="font-headline-lg text-headline-lg mb-12 uppercase border-l-4 border-primary pl-6 text-white">CATEGORÍAS</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         {categories.map((cat) => (
-          <button key={cat.id} id={cat.id} onClick={onNavigateCategories} className="group relative h-[400px] overflow-hidden rounded border border-card-border bg-elevated-gray text-left w-full cursor-pointer">
+          <button key={cat.id} id={cat.id} onClick={() => onNavigateCategories(cat.slug)} className="group relative h-[400px] overflow-hidden rounded border border-card-border bg-elevated-gray text-left w-full cursor-pointer">
             <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={cat.src} alt={cat.title} />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent flex flex-col justify-end p-8">
               <span className="bg-primary text-on-primary px-3 py-1 text-label-sm font-label-sm rounded-sm mb-2 w-fit">{cat.tag}</span>
@@ -224,8 +227,9 @@ function FeaturedSection({ onAddToCart }) {
 }
 
 function CategoryProductGrid({ categoryName, products, onAddToCart }) {
+  const sectionId = 'cat-' + categoryName.toLowerCase()
   return (
-    <section data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">{categoryName}</h2>
         <a className="flex items-center space-x-2 font-bold hover:text-yellow-400 transition text-primary" href="#">
@@ -467,7 +471,17 @@ function InfographicSection() {
   )
 }
 
-function CategoriesPage({ onAddToCart }) {
+function CategoriesPage({ onAddToCart, scrollToCategory }) {
+  const prevScroll = React.useRef(null)
+  React.useEffect(() => {
+    if (scrollToCategory && scrollToCategory !== prevScroll.current) {
+      prevScroll.current = scrollToCategory
+      setTimeout(() => {
+        const el = document.getElementById('cat-' + scrollToCategory.toLowerCase())
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
+    }
+  }, [scrollToCategory])
   return (
     <main>
       {Object.entries(PRODUCTS_BY_CATEGORY).map(([category, products]) => (
@@ -500,6 +514,7 @@ function HomePage({ onAddToCart, onNavigateCategories }) {
 export default function App() {
   const { cart, isOpen, setIsOpen, totalCount, addToCart, removeFromCart, updateQuantity, formatPrice } = useCart()
   const [page, setPage] = React.useState('home')
+  const [scrollToCategory, setScrollToCategory] = React.useState(null)
 
   const scrollToFeatured = useCallback(() => {
     const el = document.getElementById('featured-section')
@@ -510,8 +525,8 @@ export default function App() {
     alert('¡Gracias por tu compra! Procediendo a la pasarela de pagos segura...')
   }, [])
 
-  const navigateHome = useCallback(() => setPage('home'), [])
-  const navigateCategories = useCallback(() => setPage('categories'), [])
+  const navigateHome = useCallback(() => { setPage('home'); setScrollToCategory(null) }, [])
+  const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null) }, [])
 
   return (
     <div className="bg-background text-white font-body-base antialiased min-h-screen">
@@ -520,7 +535,7 @@ export default function App() {
       {page === 'home' ? (
         <HomePage onAddToCart={addToCart} onNavigateCategories={navigateCategories} />
       ) : (
-        <CategoriesPage onAddToCart={addToCart} />
+        <CategoriesPage onAddToCart={addToCart} scrollToCategory={scrollToCategory} />
       )}
 
       <FooterSection />
