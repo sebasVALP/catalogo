@@ -161,9 +161,9 @@ function CategoriesSection({ onNavigateCategories }) {
   )
 }
 
-function ProductCard({ product, onAddToCart }) {
+function ProductCard({ product, onAddToCart, onNavigateProduct }) {
   return (
-    <div id={product.id} className="relative bg-elevated-gray border border-card-border overflow-hidden group rounded h-80">
+    <div id={product.id} onClick={() => onNavigateProduct?.(product.id)} className="relative bg-elevated-gray border border-card-border overflow-hidden group rounded h-80 cursor-pointer">
       <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src={product.img} alt={product.name} />
       {product.tag && (
         <span className={`absolute top-2 left-2 px-2 py-0.5 text-label-sm font-semibold rounded-sm z-10 ${product.tag === 'Oferta' ? 'bg-primary text-on-primary' : 'bg-white text-black'}`}>
@@ -184,7 +184,7 @@ function ProductCard({ product, onAddToCart }) {
   )
 }
 
-function FeaturedSection({ onAddToCart }) {
+function FeaturedSection({ onAddToCart, onNavigateProduct }) {
   return (
     <section className="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
       <div className="flex justify-between items-end mb-12">
@@ -193,14 +193,14 @@ function FeaturedSection({ onAddToCart }) {
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {FEATURED_PRODUCTS.map((product) => (
-          <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+          <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} onNavigateProduct={onNavigateProduct} />
         ))}
       </div>
     </section>
   )
 }
 
-function CategoryProductGrid({ categoryName, products, onAddToCart }) {
+function CategoryProductGrid({ categoryName, products, onAddToCart, onNavigateProduct }) {
   const sectionId = 'cat-' + categoryName.toLowerCase()
   return (
     <section id={sectionId} data-purpose="category-section" className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 scroll-mt-28">
@@ -213,7 +213,7 @@ function CategoryProductGrid({ categoryName, products, onAddToCart }) {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <div key={product.id} className="product-card bg-elevated-gray border border-card-border rounded-xl overflow-hidden shadow-xl" data-purpose="product-item">
+          <div key={product.id} onClick={() => onNavigateProduct?.(product.id)} className="product-card bg-elevated-gray border border-card-border rounded-xl overflow-hidden shadow-xl cursor-pointer" data-purpose="product-item">
             <img alt={product.name} className="w-full aspect-[4/5] object-cover" src={product.img} />
             <div className="p-4 flex justify-between items-end">
               <div>
@@ -445,7 +445,7 @@ function InfographicSection() {
   )
 }
 
-function CategoriesPage({ onAddToCart, scrollToCategory }) {
+function CategoriesPage({ onAddToCart, onNavigateProduct, scrollToCategory }) {
   const prevScroll = React.useRef(null)
   React.useEffect(() => {
     if (scrollToCategory && scrollToCategory !== prevScroll.current) {
@@ -464,13 +464,14 @@ function CategoriesPage({ onAddToCart, scrollToCategory }) {
           categoryName={category}
           products={products}
           onAddToCart={onAddToCart}
+          onNavigateProduct={onNavigateProduct}
         />
       ))}
     </main>
   )
 }
 
-function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
+function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentComplete }) {
   const [selectedCity, setSelectedCity] = React.useState('Pereira')
   const [showCityDropdown, setShowCityDropdown] = React.useState(false)
 
@@ -603,7 +604,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
                 <p className="font-bold text-3xl text-primary">{formatPrice(total)}</p>
               </div>
             </div>
-            <button className="w-full bg-transparent border-2 border-green-500 rounded-full py-4 px-6 flex items-center justify-between group hover:bg-green-500/10 transition-colors">
+            <button onClick={onPaymentComplete} className="w-full bg-transparent border-2 border-green-500 rounded-full py-4 px-6 flex items-center justify-between group hover:bg-green-500/10 transition-colors">
               <Icon name="lock" className="text-white" />
               <span className="font-headline-lg text-2xl uppercase tracking-widest text-white">Pagar {formatPrice(total)}</span>
               <Icon name="arrow_forward" className="text-white group-hover:translate-x-1 transition-transform" />
@@ -633,16 +634,274 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome }) {
   )
 }
 
-function HomePage({ onAddToCart, onNavigateCategories }) {
+function HomePage({ onAddToCart, onNavigateCategories, onNavigateProduct }) {
   return (
     <main>
       <HeroSection onNavigateCategories={onNavigateCategories} />
       <CategoriesSection onNavigateCategories={onNavigateCategories} />
       <div id="featured-section">
-        <FeaturedSection onAddToCart={onAddToCart} />
+        <FeaturedSection onAddToCart={onAddToCart} onNavigateProduct={onNavigateProduct} />
       </div>
       <InfographicSection />
       <WhyBuySection />
+    </main>
+  )
+}
+
+const PRODUCT_DESCRIPTIONS = {
+  'llav-1': '¿No puedes estar en tu auto todo el día? Al menos ten el corazón de tu motor en el bolsillo. Este llavero de mini turbo no solo se ve increíble, sino que está diseñado para los que sabemos que la vida es mejor con un caracol bajo el capó.',
+}
+
+const PRODUCT_TAGLINE = {
+  'llav-1': { oldPrice: 20000, discount: 'Ahorra $5.000 (25% OFF)', rating: 5, reviews: 128 },
+  'llav-2': { oldPrice: 20000, discount: 'Ahorra $5.000 (25% OFF)', rating: 4, reviews: 64 },
+  'llav-3': { oldPrice: 20000, discount: 'Ahorra $5.000 (25% OFF)', rating: 5, reviews: 92 },
+  'llav-4': { oldPrice: 20000, discount: 'Ahorra $5.000 (25% OFF)', rating: 4, reviews: 47 },
+  'pin-1': { oldPrice: 18000, discount: 'Ahorra $4.000 (22% OFF)', rating: 5, reviews: 156 },
+  'pin-2': { oldPrice: 15000, discount: 'Ahorra $3.000 (20% OFF)', rating: 4, reviews: 38 },
+  'pin-3': { oldPrice: 15000, discount: 'Ahorra $3.000 (20% OFF)', rating: 5, reviews: 203 },
+  'pin-4': { oldPrice: 20000, discount: 'Ahorra $5.000 (25% OFF)', rating: 5, reviews: 89 },
+  'gor-1': { oldPrice: 65000, discount: 'Ahorra $15.000 (23% OFF)', rating: 4, reviews: 55 },
+  'gor-2': { oldPrice: 65000, discount: 'Ahorra $15.000 (23% OFF)', rating: 4, reviews: 71 },
+  'gor-3': { oldPrice: 65000, discount: 'Ahorra $15.000 (23% OFF)', rating: 5, reviews: 112 },
+  'gor-4': { oldPrice: 65000, discount: 'Ahorra $15.000 (23% OFF)', rating: 4, reviews: 44 },
+  'med-1': { oldPrice: 10000, discount: 'Ahorra $3.000 (30% OFF)', rating: 5, reviews: 178 },
+  'med-2': { oldPrice: 10000, discount: 'Ahorra $3.000 (30% OFF)', rating: 4, reviews: 63 },
+  'med-3': { oldPrice: 10000, discount: 'Ahorra $3.000 (30% OFF)', rating: 5, reviews: 91 },
+  'med-4': { oldPrice: 10000, discount: 'Ahorra $3.000 (30% OFF)', rating: 4, reviews: 36 },
+}
+
+function Ratings({ count }) {
+  return (
+    <div className="flex text-primary">
+      {Array.from({ length: 5 }, (_, i) => (
+        <svg key={i} className={`w-5 h-5 ${i < count ? 'fill-current' : 'fill-none stroke-current'}`} viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+      ))}
+    </div>
+  )
+}
+
+function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigateProduct }) {
+  const [quantity, setQuantity] = React.useState(1)
+  const tagline = PRODUCT_TAGLINE[product.id] || { oldPrice: product.price + 5000, discount: 'Oferta especial', rating: 4, reviews: 50 }
+  const description = PRODUCT_DESCRIPTIONS[product.id] || `Lleva contigo el estilo que te representa. ${product.name} es un accesorio exclusivo de Storebass, diseñado para quienes buscan originalidad y calidad en cada detalle.`
+
+  const allCategoryProducts = Object.values(PRODUCTS_BY_CATEGORY).flat()
+  const related = allCategoryProducts.filter(p => p.id !== product.id).slice(0, 4)
+
+  return (
+    <main className="flex-grow w-full pt-24">
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+          <div className="space-y-6">
+            <div className="relative rounded-3xl overflow-hidden bg-elevated-gray aspect-[4/3] group">
+              <img alt={product.name} className="w-full h-full object-cover" src={product.img} />
+              <button className="absolute top-6 right-6 p-3 bg-black/40 backdrop-blur-md rounded-full text-white hover:text-red-500 transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              </button>
+            </div>
+            <div className="flex items-center gap-4 justify-center">
+              <button className="p-2 text-gray-400 hover:text-white">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              </button>
+              <div className="flex gap-4">
+                <div className="w-24 h-24 rounded-xl border-2 border-primary overflow-hidden cursor-pointer">
+                  <img className="w-full h-full object-cover" src={product.img} alt={product.name} />
+                </div>
+                <div className="w-24 h-24 rounded-xl border border-card-border overflow-hidden cursor-pointer grayscale hover:grayscale-0">
+                  <img className="w-full h-full object-cover" src={product.img} alt={product.name} />
+                </div>
+                <div className="w-24 h-24 rounded-xl border border-card-border overflow-hidden cursor-pointer grayscale hover:grayscale-0">
+                  <img className="w-full h-full object-cover" src={product.img} alt={product.name} />
+                </div>
+              </div>
+              <button className="p-2 text-gray-400 hover:text-white">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-5xl font-black italic tracking-tighter mb-2 uppercase text-white">{product.name}</h1>
+              <div className="flex items-center gap-2 mb-4">
+                <Ratings count={tagline.rating} />
+                <span className="text-sm text-gray-400">({tagline.reviews.toLocaleString('es-CO')} reseñas)</span>
+              </div>
+              <p className="text-gray-300 leading-relaxed max-w-lg">{description}</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-3xl line-through text-gray-500 font-bold">${tagline.oldPrice.toLocaleString('es-CO')}</span>
+              <span className="text-5xl font-black text-white">${product.price.toLocaleString('es-CO')}</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <span className="bg-primary text-on-primary px-4 py-1.5 rounded-md text-xs font-black uppercase">{tagline.discount}</span>
+              <div className="flex items-center gap-2 text-green-500 font-bold">
+                <span className="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+                <span>En stock</span>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex items-center bg-elevated-gray border border-card-border rounded-xl overflow-hidden px-2 h-14">
+                <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-lg text-2xl font-light text-white">-</button>
+                <input readOnly className="w-16 bg-transparent border-none text-center font-bold text-xl focus:ring-0 text-white" type="number" value={quantity} />
+                <button onClick={() => setQuantity(q => q + 1)} className="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-lg text-2xl font-light text-white">+</button>
+              </div>
+              <button
+                onClick={() => {
+                  for (let i = 0; i < quantity; i++) onAddToCart(product)
+                  onNavigateCheckout()
+                }}
+                className="flex-1 bg-white text-black font-black uppercase text-lg px-8 rounded-xl h-14 hover:bg-primary transition-colors"
+              >
+                Comprar Ahora
+              </button>
+            </div>
+            <button
+              onClick={() => {
+                for (let i = 0; i < quantity; i++) onAddToCart(product)
+              }}
+              className="w-full bg-transparent border-2 border-primary text-primary font-black uppercase text-xl py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-primary hover:text-white transition-all group"
+            >
+              Agregar al Carrito
+              <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+            </button>
+          </div>
+        </div>
+        <section className="border-t border-card-border pt-16">
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white">Productos Relacionados</h2>
+            <button onClick={() => onNavigateProduct(related[0]?.id)} className="flex items-center gap-2 font-bold text-lg hover:text-primary text-primary">
+              Ver más
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {related.map((rp) => {
+              const rpTag = PRODUCT_TAGLINE[rp.id]
+              return (
+                <div key={rp.id} onClick={() => onNavigateProduct(rp.id)} className="bg-surface-container-low rounded-3xl overflow-hidden group cursor-pointer border border-transparent hover:border-primary/30 transition-all">
+                  <div className="aspect-square bg-elevated-gray relative">
+                    <img alt={rp.name} className="w-full h-full object-cover" src={rp.img} />
+                  </div>
+                  <div className="p-6 flex items-center justify-between">
+                    <div>
+                      <h3 className="font-black italic uppercase text-lg leading-tight text-white">{rp.name}</h3>
+                      <p className="text-xl font-bold text-primary">{'$' + rp.price.toLocaleString('es-CO')}</p>
+                      {rpTag && <p className="text-xs text-gray-400 line-through">${rpTag.oldPrice.toLocaleString('es-CO')}</p>}
+                    </div>
+                    <button onClick={(e) => { e.stopPropagation(); onAddToCart(rp) }} className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-on-primary">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+        <section className="mt-32 mb-16">
+          <h2 className="text-center text-3xl font-black italic uppercase mb-12 text-white">¿Por qué comprar en Storebass?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
+              { icon: 'verified', text: 'Productos\nexclusivos' },
+              { icon: 'lock', text: 'Pagos 100%\nseguros' },
+              { icon: 'support_agent', text: 'Atención\npersonalizada' },
+            ].map((item) => (
+              <div key={item.icon} className="flex items-center gap-4 group">
+                <div className="p-4 bg-primary rounded-2xl text-on-primary">
+                  <Icon name={item.icon} className="w-8 h-8 text-3xl" />
+                </div>
+                <div>
+                  <p className="font-black leading-tight text-white">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}
+
+function PaymentCompletePage({ cart, formatPrice, onNavigateHome }) {
+  const orderNumber = React.useMemo(() => 'STB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase(), [])
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0)
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const shipping = subtotal > 0 ? 8000 : 0
+  const total = subtotal + shipping
+
+  return (
+    <main className="flex-grow w-full pt-28 pb-16">
+      <div className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop">
+        <div className="bg-elevated-gray border border-card-border rounded-3xl overflow-hidden">
+          <div className="bg-gradient-to-r from-green-600 to-green-500 p-10 text-center">
+            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3"></path></svg>
+            </div>
+            <h1 className="text-4xl font-black italic uppercase tracking-tighter text-white">¡Pago Exitoso!</h1>
+            <p className="text-white/80 mt-2 text-lg">Tu pedido ha sido confirmado</p>
+          </div>
+          <div className="p-8 space-y-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-card-border">
+              <div>
+                <p className="text-sm text-gray-400 uppercase tracking-wider">Número de pedido</p>
+                <p className="font-bold text-xl text-primary">{orderNumber}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-gray-400 uppercase tracking-wider">Fecha</p>
+                <p className="font-bold text-white">{new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-headline-lg text-xl uppercase text-white mb-4">Resumen del Pedido</h3>
+              <div className="space-y-3">
+                {cart.map((item) => (
+                  <div key={item.id} className="flex items-center gap-4 bg-surface-container-low p-3 rounded-lg">
+                    <img src={item.img} className="w-14 h-14 object-cover rounded border border-card-border/40" alt={item.name} />
+                    <div className="flex-1">
+                      <h4 className="font-title-md text-sm text-white uppercase truncate">{item.name}</h4>
+                      <p className="text-xs text-gray-400">Cantidad: {item.quantity}</p>
+                    </div>
+                    <p className="font-bold text-primary">{formatPrice(item.price * item.quantity)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2 border-t border-card-border pt-6">
+              <div className="flex justify-between text-white/80">
+                <span>Subtotal ({totalCount} producto{totalCount !== 1 ? 's' : ''})</span>
+                <span>{formatPrice(subtotal)}</span>
+              </div>
+              <div className="flex justify-between text-white/80">
+                <span>Envío</span>
+                <span>{shipping > 0 ? formatPrice(shipping) : 'Gratis'}</span>
+              </div>
+              <div className="flex justify-between text-xl font-bold text-white border-t border-card-border pt-2">
+                <span>Total pagado</span>
+                <span className="text-primary">{formatPrice(total)}</span>
+              </div>
+            </div>
+            <div className="bg-surface-container-low border border-card-border rounded-xl p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <Icon name="local_shipping" className="text-2xl text-primary" />
+                <h4 className="font-headline-lg text-lg uppercase text-white">Información de envío</h4>
+              </div>
+              <p className="text-white/80 text-sm">Tu pedido será enviado a la dirección registrada en un plazo de 2 a 5 días hábiles.</p>
+              <p className="text-white/60 text-xs mt-2">Recibirás un correo con el número de guía cuando sea despachado.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <button onClick={onNavigateHome} className="flex-1 bg-primary text-on-primary py-4 font-headline-lg text-xl uppercase rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+                <Icon name="home" />
+                Volver al inicio
+              </button>
+              <button onClick={onNavigateHome} className="flex-1 bg-transparent border-2 border-primary text-primary py-4 font-headline-lg text-xl uppercase rounded-xl hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2">
+                <Icon name="shopping_bag" />
+                Seguir comprando
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
@@ -651,21 +910,32 @@ export default function App() {
   const { cart, isOpen, setIsOpen, totalCount, addToCart, removeFromCart, updateQuantity, formatPrice } = useCart()
   const [page, setPage] = React.useState('home')
   const [scrollToCategory, setScrollToCategory] = React.useState(null)
+  const [selectedProduct, setSelectedProduct] = React.useState(null)
 
-  const navigateCheckout = useCallback(() => { setIsOpen(false); setPage('checkout') }, [])
-  const navigateHome = useCallback(() => { setPage('home'); setScrollToCategory(null) }, [])
-  const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null) }, [])
+  const scrollTop = useCallback(() => window.scrollTo(0, 0), [])
+  const navigateCheckout = useCallback(() => { setIsOpen(false); setPage('checkout'); scrollTop() }, [scrollTop])
+  const navigatePaymentComplete = useCallback(() => { setPage('paymentComplete'); scrollTop() }, [scrollTop])
+  const navigateHome = useCallback(() => { setPage('home'); setScrollToCategory(null); setSelectedProduct(null); scrollTop() }, [scrollTop])
+  const navigateCategories = useCallback((slug) => { setPage('categories'); setScrollToCategory(slug || null); setSelectedProduct(null); scrollTop() }, [scrollTop])
+  const navigateProduct = useCallback((productId) => {
+    const product = ALL_PRODUCTS.find(p => p.id === productId)
+    if (product) { setSelectedProduct(product); setPage('product'); scrollTop() }
+  }, [scrollTop])
 
   return (
     <div className="bg-background text-white font-body-base antialiased min-h-screen">
       <Navbar totalCount={totalCount} onCartToggle={() => setIsOpen(true)} onNavigateHome={navigateHome} onNavigateCategories={navigateCategories} currentPage={page} />
 
       {page === 'home' ? (
-        <HomePage onAddToCart={addToCart} onNavigateCategories={navigateCategories} />
+        <HomePage onAddToCart={addToCart} onNavigateCategories={navigateCategories} onNavigateProduct={navigateProduct} />
       ) : page === 'categories' ? (
-        <CategoriesPage onAddToCart={addToCart} scrollToCategory={scrollToCategory} />
+        <CategoriesPage onAddToCart={addToCart} onNavigateProduct={navigateProduct} scrollToCategory={scrollToCategory} />
+      ) : page === 'product' && selectedProduct ? (
+        <ProductDetailPage product={selectedProduct} onAddToCart={addToCart} onNavigateCheckout={navigateCheckout} onNavigateProduct={navigateProduct} />
+      ) : page === 'paymentComplete' ? (
+        <PaymentCompletePage cart={cart} formatPrice={formatPrice} onNavigateHome={navigateHome} />
       ) : (
-        <CheckoutPage cart={cart} formatPrice={formatPrice} onNavigateHome={navigateHome} />
+        <CheckoutPage cart={cart} formatPrice={formatPrice} onNavigateHome={navigateHome} onPaymentComplete={navigatePaymentComplete} />
       )}
 
       <FooterSection />
