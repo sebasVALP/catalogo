@@ -2,10 +2,6 @@ import React, { useCallback } from 'react'
 import { useCart } from './hooks/useCart'
 import { GooeyLoader } from './components/ui/GooeyLoader'
 import { PortfolioGallery } from './components/ui/PortfolioGallery'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const PRODUCTS_BY_CATEGORY = {
   Llaveros: [
