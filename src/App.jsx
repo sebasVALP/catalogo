@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { useCart } from './hooks/useCart'
 import { GooeyLoader } from './components/ui/GooeyLoader'
+import { PortfolioGallery } from './components/ui/PortfolioGallery'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -15,7 +16,7 @@ const PRODUCTS_BY_CATEGORY = {
   ],
   Pines: [
     { id: 'pin-1', name: 'Mario Party', price: 14000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZVeBuoc0q72wbbAr1uG2AaM3jffTU4uxMZ6g3yrEJ2NHfVokuQKoCa9IqE5KO1fG4mWEf9sHWSVdyY_qSBtaCNJteU1grfPSsbcXHjngflvKbvDsyCV-zcl1wH7tYYVPRzrDeU6zxModj6vGJrZO2WteogI37mI1d0FqTZ_vZoXrCxG3cMKgr2cWoKs5t4yplN_sY1K8ACQZlY9-Zw495klghXhiZCwmuvs8b6KeXbanvmoxR--7otL7EqSruNFi-NymVmZWPTG5q' },
-    { id: 'pin-2', name: 'BaterÃ­a de Paciencia', price: 12000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLdxZslRiyIvQRRoD7JJzBqvbEh_EPR9eRg43OyG6u_emiJrIZEfR1mD8XgVyVuz7ZaT6NNZllsAWktqp--FTS9RdNirKngJPdtL2iOGR2deZBQ6kwc9_x-_8mGiYkDFdOWliyYWPp6YXHwddRGqM8V6oay5Te7RoKboYcgES7SYhXQQkL1K7MgJsYOLBSFUD_jpHKyX5JQvz3Fab9rGp8DXNhutIRcB2GgKJkWPx7D8nVapoSzpQCEZ4vRJCI675FtRWvUaeX6pnv' },
+    { id: 'pin-2', name: 'Batería de Paciencia', price: 12000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLdxZslRiyIvQRRoD7JJzBqvbEh_EPR9eRg43OyG6u_emiJrIZEfR1mD8XgVyVuz7ZaT6NNZllsAWktqp--FTS9RdNirKngJPdtL2iOGR2deZBQ6kwc9_x-_8mGiYkDFdOWliyYWPp6YXHwddRGqM8V6oay5Te7RoKboYcgES7SYhXQQkL1K7MgJsYOLBSFUD_jpHKyX5JQvz3Fab9rGp8DXNhutIRcB2GgKJkWPx7D8nVapoSzpQCEZ4vRJCI675FtRWvUaeX6pnv' },
     { id: 'pin-3', name: 'Ew People Cat', price: 12000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCmlMQU1gPb6yPh1LCpDYfEnSEj5khD_zxf5vjMADib0AocVwsD64qroZ2HgeoEa0LRJS25PR7wG3lyM7eWaXJfICkSPYbCgOyS_ZM1PoCTT4m3juLGmgluSkuoa0hZk0lkApmWVNW4qBkPhfM98Gb3quvsvkR_q9P7C0WToiMNByfmq0qAktpHJVqDnUNOsc_dSeTYVd73_QackT7ZuzkY0hrBqTQQwKHLvwhN61XXMbpyGRV3TXMtKi6VQiYcfpAnxHbOYPcFLPL5' },
     { id: 'pin-4', name: 'Betty La Fea', price: 15000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAJcNyLO3UtnlXH_wzsSWLyZN-nviYiMLQ9tC7foDILF623OWHMobjUQwypn2asEulFhkXJ5faETvgvwcqYxu0FFy0g7fSGRxdgpJZmVvhDAPYpAOBROWo4ZClkxuq2QaZwT3BhpDuKOTvMCsihxlmGW1qIjinhYxQGCM1v2iBJtqN5tcNhNrcg6jr4yzBBo9qJp13MAE_JMQ_for4lP_nOxRQUrDkmayFFyt8a3crCIeZqJLTAkrt1kUQGTWUjNTmCygVn2gjd5iAj' },
   ],
@@ -27,7 +28,7 @@ const PRODUCTS_BY_CATEGORY = {
   ],
   Medias: [
     { id: 'med-1', name: 'Gatos', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1ArN8ccpObULS7bPQqcIiT1CRzaEx4J1iMZ7frdnkogAH3n2JYGYi8dN6XHfXwIlD7hvaMPkNKQZFBqdrxRMr3PB3h-EY74ELGj-7NdZuePaqr3mKC0rsGueGdEzvPzOPYjodcg5m2w9aRSDR7L9nOkplwVMs5cP18QpuB-KGbmLxPTZ9d5cll1SzRsu8D9racPAiy6eMER1ZY39hzm8zolFV3eJs0_Oj9WmqXAgD3L9GneF8l-BUMjEgsdLZ-Ay1jJtYFt8RQQ1g' },
-    { id: 'med-2', name: 'Comida RÃ¡pida', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_Qc_D_Gm1e_kiYKG-V9HjwzH9sfRv0f-y0PXD9EVoXUBB8UxJ2wAlna9jJ0vaKa72JeysEszPSDUitIc-R7Hisxh99RvS9lQkyjST1V7z834jppNOepEXLhwLdOlKg1nnsUEmdwASlJrTnKIxC1CCRwv7A_eXcOjdhaz8Dt7Dqy5-QdE0uRcdnrkOunM68pW5gD0VxXsyS50tMpRBLu57e3YEg0BPnfRvgaiSCacksL81KwWhj666DTxoXKY3z0MMVLKB_tzVd-i1' },
+    { id: 'med-2', name: 'Comida Rápida', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_Qc_D_Gm1e_kiYKG-V9HjwzH9sfRv0f-y0PXD9EVoXUBB8UxJ2wAlna9jJ0vaKa72JeysEszPSDUitIc-R7Hisxh99RvS9lQkyjST1V7z834jppNOepEXLhwLdOlKg1nnsUEmdwASlJrTnKIxC1CCRwv7A_eXcOjdhaz8Dt7Dqy5-QdE0uRcdnrkOunM68pW5gD0VxXsyS50tMpRBLu57e3YEg0BPnfRvgaiSCacksL81KwWhj666DTxoXKY3z0MMVLKB_tzVd-i1' },
     { id: 'med-3', name: 'Aguacate', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPOszW0Ojgbl0IRnK-iJGNOiqJZm71TFV1C6IGCBhPZ5FAotSG-CFmLRuFSzNQWh5erVMyvByNutuwldWcw5Er-ZoysmlUZnoTkfwyZjuj54CsXNIUqsx986yyvVYPYBssxXoVRLAEIzFzbzKKvTuokTlDI1Xwv5M-ZSmyeSRZBEIfN4ola9u-Igj76wPJ4BSNsWNMFXJ9DuxW38JEsKFAGOslvdx3SzURWOr68av3jG_a0WSUxRwBalSuAj7Fb_E1g8UCUzw83Dqn' },
     { id: 'med-4', name: 'Patos', price: 7000, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBk-CGvXwTbAjHl2sttzkhsgb_O2i7E4lv7m_-An3h9yelhYjLK1wlR37F5OlAtgVxLm-kFMLujwnEm1yFnxr3G4tcXo1JYLy8jnuiHTdYmKm9cDOzzWWYKlEh3exOqsilKJ7L9FkEM6jIFcXFnJlniNRZW9dcauSLPCvVViCCBz_sFB0Q7fX0U-SKS06pe2X1yknTTCrtEPJI320dMDHo09p4BzYqLbPb5gfq_uP8SiaYafnVKCZ32IH6FrhI98CENk69cJgUgOL9S' },
   ],
@@ -59,13 +60,13 @@ function Navbar({ totalCount, onCartToggle, onNavigateHome, onNavigateCategories
           <button id="brand-logo" onClick={onNavigateHome} className="bg-transparent border-none cursor-pointer"><img src="/texto-storebass.png" alt="Storebass" className="h-8 md:h-10 w-auto" /></button>
           <nav className="hidden md:flex gap-6">
           <button id="nav-home" onClick={onNavigateHome} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'home' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>HOME</button>
-          <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÃAS</button>
+          <button id="nav-categories" onClick={onNavigateCategories} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'categories' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>CATEGORÍAS</button>
           <button id="nav-portfolio" onClick={onNavigatePortfolio} className={`font-title-md text-title-md bg-transparent border-none cursor-pointer transition-colors duration-200 ${currentPage === 'portfolio' || currentPage === 'portfolioMap' || currentPage === 'profileSelect' ? 'text-primary font-bold border-b-2 border-primary pb-1' : 'text-white font-medium hover:text-primary'}`}>PORTAFOLIO</button>
         </nav>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative hidden sm:block group">
-            <input id="search-input" value={searchValue} onChange={e => setSearchValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSearch()} className="bg-elevated-gray border border-card-border text-white rounded px-4 py-2 w-64 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-200 peer font-body-base" placeholder="Â¿QuÃ© deseas comprar?" type="text" />
+            <input id="search-input" value={searchValue} onChange={e => setSearchValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSearch()} className="bg-elevated-gray border border-card-border text-white rounded px-4 py-2 w-64 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-200 peer font-body-base" placeholder="¿Qué deseas comprar?" type="text" />
             <button onClick={handleSearch} className="absolute right-3 top-2.5 text-[#c8c6c6] peer-focus:text-primary transition-colors duration-200 hover:text-primary bg-transparent border-none cursor-pointer"><Icon name="search" /></button>
           </div>
           <button id="btn-cart-toggle" onClick={onCartToggle} className="hover:text-primary transition-colors duration-200 flex items-center bg-elevated-gray border border-card-border p-2 rounded hover:border-primary relative">
@@ -92,29 +93,29 @@ function HeroSection({ onNavigateCategories }) {
           </h1>
           <p className="text-white/80 mb-8 max-w-md font-body-base" style={{ fontSize: '16px', lineHeight: 1.6 }}>
             Pines, llaveros y gorras con estilo propio.<br />
-            MÃ¡s de 200 diseÃ±os disponibles.
+            Más de 200 diseños disponibles.
           </p>
           <div className="flex flex-wrap gap-4">
             <button id="btn-hero-catalog" onClick={onNavigateCategories} className="bg-primary text-on-primary px-8 py-3.5 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center gap-3 rounded">
-              VER CATÃLOGO
+              VER CATÁLOGO
               <Icon name="arrow_forward" className="text-xl" />
             </button>
           </div>
         </div>
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden">
-          <img className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsoGEdLwdIfU8C8r82eDfDK4gRyfVifaGNw_k1OokVS_mXb0jkstPOCmc-VMnBPJI5uhqDuEUM9mrlu6evPfO34SHOtTzifziAY_BndlWRrMfm1RzYQmt2wnOjE6IPm3fyev3_zCvaP6ni0CHT_n6j2yqtZGa5OL51v9r69Y_TNambRLL2M_jcIhz676LtCSEnUNqP10fT3n5ZZLXs96rbGWLjcQn4f2X-Aal8HQDmFDwdBw1l7Ct23HTI5ioTzbzAmITqOfRF4BC1" alt="ColecciÃ³n de pines exclusivos Storebass" />
+          <img className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsoGEdLwdIfU8C8r82eDfDK4gRyfVifaGNw_k1OokVS_mXb0jkstPOCmc-VMnBPJI5uhqDuEUM9mrlu6evPfO34SHOtTzifziAY_BndlWRrMfm1RzYQmt2wnOjE6IPm3fyev3_zCvaP6ni0CHT_n6j2yqtZGa5OL51v9r69Y_TNambRLL2M_jcIhz676LtCSEnUNqP10fT3n5ZZLXs96rbGWLjcQn4f2X-Aal8HQDmFDwdBw1l7Ct23HTI5ioTzbzAmITqOfRF4BC1" alt="Colección de pines exclusivos Storebass" />
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-surface to-transparent pointer-events-none" />
         </div>
         <div className="lg:hidden relative h-56 overflow-hidden rounded mt-4 mb-2">
-          <img className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsoGEdLwdIfU8C8r82eDfDK4gRyfVifaGNw_k1OokVS_mXb0jkstPOCmc-VMnBPJI5uhqDuEUM9mrlu6evPfO34SHOtTzifziAY_BndlWRrMfm1RzYQmt2wnOjE6IPm3fyev3_zCvaP6ni0CHT_n6j2yqtZGa5OL51v9r69Y_TNambRLL2M_jcIhz676LtCSEnUNqP10fT3n5ZZLXs96rbGWLjcQn4f2X-Aal8HQDmFDwdBw1l7Ct23HTI5ioTzbzAmITqOfRF4BC1" alt="ColecciÃ³n de pines exclusivos Storebass" />
+          <img className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsoGEdLwdIfU8C8r82eDfDK4gRyfVifaGNw_k1OokVS_mXb0jkstPOCmc-VMnBPJI5uhqDuEUM9mrlu6evPfO34SHOtTzifziAY_BndlWRrMfm1RzYQmt2wnOjE6IPm3fyev3_zCvaP6ni0CHT_n6j2yqtZGa5OL51v9r69Y_TNambRLL2M_jcIhz676LtCSEnUNqP10fT3n5ZZLXs96rbGWLjcQn4f2X-Aal8HQDmFDwdBw1l7Ct23HTI5ioTzbzAmITqOfRF4BC1" alt="Colección de pines exclusivos Storebass" />
         </div>
       </div>
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-10 grid grid-cols-2 md:grid-cols-4 gap-gutter text-center border-t border-outline-variant pt-8 relative z-10">
         {[
-          { icon: 'local_shipping', label: 'EnvÃ­os a todo Colombia' },
+          { icon: 'local_shipping', label: 'Envíos a todo Colombia' },
           { icon: 'verified', label: 'Productos exclusivos' },
           { icon: 'lock', label: 'Pagos 100% seguros' },
-          { icon: 'support_agent', label: 'AtenciÃ³n personalizada' },
+          { icon: 'support_agent', label: 'Atención personalizada' },
         ].map((item) => (
           <div key={item.icon} className="flex flex-col items-center gap-2 group">
             <Icon name={item.icon} className="text-primary text-4xl group-hover:scale-110 transition-transform" />
@@ -131,14 +132,14 @@ function CategoriesSection({ onNavigateCategories }) {
     {
       id: 'category-card-pins',
       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB4ACkJ0L4YbPh_IH1-BHwH0G4o0uyxi-ivg6RKSOV6E5fIBe-v2Z-UKFL3RSZJuFsgKrDnPqweXtPnZdi-gFqUUcxwiwc_FxSpDR4JTLf5G6wrobEIYONrzxoHnB-Jj7tfN4kTnbnuKsKqPqkjmKrT2hdCKmKVcItF3vAdj8Xmkhc3E6gc3_xrP_3K7vFanTdmowVBd4ncIlAq8_fqIpypDCKTl8zkEwYeCD-WLB1Tj0MplA2XZQJsznrlZhf8fowXBk_TWmwUZP9p',
-      tag: '+200 diseÃ±os',
+      tag: '+200 diseños',
       title: 'PINES',
       slug: 'Pines',
     },
     {
       id: 'category-card-keychains',
       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5HTo0AC4YVdngfg-hSkkuNCDrDpMBCbedePGwwD5qZN2mz8MAyGRizn9dB3OsJWe2oW5u8ZqGH7C9YENeP6GEyre8VUzlzIOjHSqyGPlp-OpifcUZ53AhhH0nEQSdQxqQQbgiOI3GVALVcK6QksYdKAQXCKZQPApVnLInQlNdsHRj_AR9lq1Ew50crn55HOBcvj4Zh_W9ZHc9SgwR2Q2a0-xBiZZGAhkqkRlHp-DCdVSx2be_jxsiDrntXMPgvXgMGmw9FVnESJYd',
-      tag: '+50 diseÃ±os',
+      tag: '+50 diseños',
       title: 'LLAVEROS',
       slug: 'Llaveros',
     },
@@ -153,7 +154,7 @@ function CategoriesSection({ onNavigateCategories }) {
 
   return (
     <section className="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-      <h2 className="font-headline-lg text-headline-lg mb-12 uppercase border-l-4 border-primary pl-6 text-white">CATEGORÃAS</h2>
+      <h2 className="font-headline-lg text-headline-lg mb-12 uppercase border-l-4 border-primary pl-6 text-white">CATEGORÍAS</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         {categories.map((cat) => (
           <button key={cat.id} id={cat.id} onClick={() => onNavigateCategories(cat.slug)} className="group relative h-[400px] overflow-hidden rounded border border-card-border bg-elevated-gray text-left w-full cursor-pointer">
@@ -243,16 +244,16 @@ function CategoryProductGrid({ categoryName, products, onAddToCart, onNavigatePr
 
 function WhyBuySection() {
   const items = [
-    { icon: 'local_shipping', title: 'EnvÃ­os a todo Colombia', desc: 'Entrega rÃ¡pida y segura en todas las ciudades principales.' },
-    { icon: 'verified', title: 'Productos exclusivos', desc: 'DiseÃ±os limitados que no encontrarÃ¡s en ningÃºn otro lugar.' },
+    { icon: 'local_shipping', title: 'Envíos a todo Colombia', desc: 'Entrega rápida y segura en todas las ciudades principales.' },
+    { icon: 'verified', title: 'Productos exclusivos', desc: 'Diseños limitados que no encontrarás en ningún otro lugar.' },
     { icon: 'lock', title: 'Pagos 100% seguros', desc: 'Plataforma encriptada para proteger todas tus transacciones.' },
-    { icon: 'support_agent', title: 'AtenciÃ³n personalizada', desc: 'Estamos para ayudarte en cada paso de tu compra.' },
+    { icon: 'support_agent', title: 'Atención personalizada', desc: 'Estamos para ayudarte en cada paso de tu compra.' },
   ]
 
   return (
     <section className="bg-surface-container-lowest py-24 topographic-bg border-t border-b border-outline-variant">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-        <h2 className="font-headline-lg text-headline-lg mb-16 uppercase border-l-4 border-primary pl-6 text-white text-left">Â¿POR QUÃ‰ COMPRAR EN STOREBASS?</h2>
+        <h2 className="font-headline-lg text-headline-lg mb-16 uppercase border-l-4 border-primary pl-6 text-white text-left">¿POR QUÉ COMPRAR EN STOREBASS?</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
           {items.map((item) => (
             <div key={item.icon} className="flex flex-col items-center gap-4">
@@ -302,7 +303,7 @@ function FooterSection({ onNavigateCategories }) {
         <p>&copy; 2024 Storebass. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <a id="footer-link-privacy" className="hover:text-primary transition-colors" href="#">Privacidad</a>
-          <a id="footer-link-shipping" className="hover:text-primary transition-colors" href="#">EnvÃ­os</a>
+          <a id="footer-link-shipping" className="hover:text-primary transition-colors" href="#">Envíos</a>
         </div>
       </div>
     </footer>
@@ -335,10 +336,10 @@ function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onChe
           {totalCount === 0 ? (
             <div id="cart-empty-message" className="flex flex-col items-center justify-center h-full text-center space-y-4">
               <Icon name="shopping_bag" className="text-6xl text-secondary opacity-50" />
-              <p className="font-title-md text-white uppercase">Tu carrito estÃ¡ vacÃ­o</p>
-              <p className="text-white/60 text-sm max-w-xs">Â¡Agrega pines, llaveros o gorras para darle estilo a tu outfit!</p>
+              <p className="font-title-md text-white uppercase">Tu carrito está vacío</p>
+              <p className="text-white/60 text-sm max-w-xs">¡Agrega pines, llaveros o gorras para darle estilo a tu outfit!</p>
               <button id="btn-cart-empty-catalog" onClick={() => { setIsOpen(false); onNavigateCategories() }} className="mt-4 bg-primary text-on-primary px-6 py-3 font-headline-lg text-lg uppercase rounded hover:brightness-110 transition-all">
-                Ver CatÃ¡logo
+                Ver Catálogo
               </button>
             </div>
           ) : (
@@ -368,7 +369,7 @@ function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onChe
               <span>Total:</span>
               <span id="cart-total" className="text-primary font-headline-lg text-2xl">{formatPrice(totalPrice)}</span>
             </div>
-            <p className="text-xs text-white/50">* EnvÃ­os a todo Colombia. El costo de envÃ­o se calcula al pagar.</p>
+            <p className="text-xs text-white/50">* Envíos a todo Colombia. El costo de envío se calcula al pagar.</p>
             <button id="btn-cart-checkout" onClick={onCheckout} className="w-full bg-primary text-on-primary py-4 font-headline-lg text-xl uppercase hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 rounded">
               Proceder al pago
               <Icon name="arrow_forward" />
@@ -382,9 +383,9 @@ function CartDrawer({ cart, isOpen, setIsOpen, onRemove, onUpdateQuantity, onChe
 
 function InfographicSection() {
   const stats = [
-    { value: '200+', label: 'DiseÃ±os exclusivos', icon: 'palette' },
+    { value: '200+', label: 'Diseños exclusivos', icon: 'palette' },
     { value: '5.000+', label: 'Clientes satisfechos', icon: 'people' },
-    { value: '24/7', label: 'AtenciÃ³n al cliente', icon: 'support_agent' },
+    { value: '24/7', label: 'Atención al cliente', icon: 'support_agent' },
     { value: '100%', label: 'Pagos seguros', icon: 'verified' },
   ]
 
@@ -399,7 +400,7 @@ function InfographicSection() {
             Nuestro impacto
           </h2>
           <p className="text-white/70 max-w-xl mx-auto mb-10">
-            MÃ¡s que una tienda, una comunidad que crece cada dÃ­a.
+            Más que una tienda, una comunidad que crece cada día.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat) => (
@@ -488,9 +489,9 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
   }
 
   const colombianCities = [
-    'BogotÃ¡', 'MedellÃ­n', 'Cali', 'Barranquilla', 'Cartagena',
-    'Bucaramanga', 'Pereira', 'Manizales', 'Armenia', 'CÃºcuta',
-    'IbaguÃ©', 'Villavicencio', 'Santa Marta', 'Neiva', 'PopayÃ¡n',
+    'Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena',
+    'Bucaramanga', 'Pereira', 'Manizales', 'Armenia', 'Cúcuta',
+    'Ibagué', 'Villavicencio', 'Santa Marta', 'Neiva', 'Popayán',
   ]
 
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0)
@@ -516,23 +517,23 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input value={name} onChange={e => setName(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Nombre" type="text" />
               <input value={lastName} onChange={e => setLastName(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Apellido" type="text" />
-              <input value={email} onChange={e => setEmail(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Correo electrÃ³nico" type="email" />
+              <input value={email} onChange={e => setEmail(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Correo electrónico" type="email" />
               <input value={phone} onChange={e => setPhone(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Celular" type="tel" />
             </div>
           </section>
           <section className="bg-elevated-gray rounded-xl p-8 border border-card-border" data-purpose="payment-methods">
             <div className="flex items-center gap-3 mb-2">
               <Icon name="credit_card" className="text-2xl text-primary" />
-              <h2 className="font-headline-lg text-xl uppercase text-white">MÃ©todos de Pago</h2>
+              <h2 className="font-headline-lg text-xl uppercase text-white">Métodos de Pago</h2>
             </div>
-            <p className="text-xs text-gray-400 mb-6">Selecciona tu mÃ©todo de pago de preferencia</p>
+            <p className="text-xs text-gray-400 mb-6">Selecciona tu método de pago de preferencia</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
               <button
                 onClick={() => setSelectedPayment('card')}
                 className={`payment-option flex flex-col items-center justify-between p-4 rounded-lg border h-32 transition-all ${selectedPayment === 'card' ? 'border-primary bg-primary/10' : 'border-card-border bg-surface-container-low hover:border-primary'}`}
               >
                 <Icon name="credit_card" className="text-3xl text-primary" />
-                <span className="text-[10px] text-center text-white">Tarjeta dÃ©bito o crÃ©dito</span>
+                <span className="text-[10px] text-center text-white">Tarjeta débito o crédito</span>
               </button>
               <button
                 onClick={() => setSelectedPayment('pse')}
@@ -557,7 +558,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
               </button>
             </div>
             <div className="space-y-4">
-              <input value={cardNumber} onChange={e => setCardNumber(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="NÃºmero de la tarjeta" type="text" />
+              <input value={cardNumber} onChange={e => setCardNumber(e.target.value)} className="w-full rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="Número de la tarjeta" type="text" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <input value={cardExp} onChange={e => setCardExp(e.target.value)} className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="EXP MM/AA" type="text" />
                 <input value={cardCvv} onChange={e => setCardCvv(e.target.value)} className="rounded-lg bg-transparent border border-white py-3 px-4 text-white placeholder-gray-400 focus:border-primary focus:outline-none" placeholder="CVV" type="text" />
@@ -567,8 +568,8 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
             <div className="mt-6 bg-surface-container-low border border-primary/30 rounded-lg p-4 relative">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col">
-                  <p className="text-xs text-white"><span className="text-primary font-bold">EnvÃ­o a</span> {selectedCity}</p>
-                  <p className="text-[10px] text-gray-400">Entrega estimada de 2 a 5 dÃ­as</p>
+                  <p className="text-xs text-white"><span className="text-primary font-bold">Envío a</span> {selectedCity}</p>
+                  <p className="text-[10px] text-gray-400">Entrega estimada de 2 a 5 días</p>
                 </div>
                 <button onClick={() => setShowCityDropdown(!showCityDropdown)} className="text-primary font-bold text-sm">Cambiar</button>
               </div>
@@ -588,7 +589,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
             </div>
             <div className="mt-6 flex items-center gap-3">
               <input checked={acceptPolicy} onChange={e => setAcceptPolicy(e.target.checked)} type="checkbox" className="rounded bg-transparent border-gray-500 text-primary focus:ring-primary" />
-              <label className="text-[10px] text-gray-400 uppercase">Aceptas las polÃ­ticas de tratamiento de datos</label>
+              <label className="text-[10px] text-gray-400 uppercase">Aceptas las políticas de tratamiento de datos</label>
             </div>
           </section>
         </div>
@@ -596,7 +597,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
           <aside className="bg-elevated-gray rounded-xl p-8 border border-card-border sticky top-24" data-purpose="order-summary">
             <div className="flex items-center gap-3 mb-8">
               <Icon name="receipt_long" className="text-2xl text-primary" />
-              <h2 className="font-headline-lg text-3xl uppercase text-white">ResÃºmen del Pedido</h2>
+              <h2 className="font-headline-lg text-3xl uppercase text-white">Resúmen del Pedido</h2>
             </div>
             <div className="space-y-6 mb-8 border-b border-card-border pb-8">
               {cart.map((item) => (
@@ -620,7 +621,7 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
                 <p className="font-bold text-xl text-white">{formatPrice(subtotal)}</p>
               </div>
               <div className="flex justify-between items-center italic">
-                <p className="text-lg text-white">EnvÃ­o</p>
+                <p className="text-lg text-white">Envío</p>
                 <p className="font-bold text-xl text-white">{shipping > 0 ? formatPrice(shipping) : 'Gratis'}</p>
               </div>
               <div className="flex justify-between items-center border-t border-card-border pt-4">
@@ -637,13 +638,13 @@ function CheckoutPage({ cart, formatPrice, onNavigateHome, onPaymentProcessing }
         </div>
       </div>
       <section className="mt-24 text-center">
-        <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">Â¿Por quÃ© comprar en Storebass?</h2>
+        <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">¿Por qué comprar en Storebass?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { icon: 'local_shipping', text: 'EnvÃ­os a\ntodo Colombia' },
+            { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
             { icon: 'verified', text: 'Productos\nexclusivos' },
             { icon: 'lock', text: 'Pagos 100%\nseguros' },
-            { icon: 'support_agent', text: 'AtenciÃ³n\npersonalizada' },
+            { icon: 'support_agent', text: 'Atención\npersonalizada' },
           ].map((item) => (
             <div key={item.icon} className="flex flex-col items-center">
               <div className="mb-4 text-primary">
@@ -673,7 +674,7 @@ function HomePage({ onAddToCart, onNavigateCategories, onNavigateProduct }) {
 }
 
 const PRODUCT_DESCRIPTIONS = {
-  'llav-1': 'Â¿No puedes estar en tu auto todo el dÃ­a? Al menos ten el corazÃ³n de tu motor en el bolsillo. Este llavero de mini turbo no solo se ve increÃ­ble, sino que estÃ¡ diseÃ±ado para los que sabemos que la vida es mejor con un caracol bajo el capÃ³.',
+  'llav-1': '¿No puedes estar en tu auto todo el día? Al menos ten el corazón de tu motor en el bolsillo. Este llavero de mini turbo no solo se ve increíble, sino que está diseñado para los que sabemos que la vida es mejor con un caracol bajo el capó.',
 }
 
 const PRODUCT_TAGLINE = {
@@ -709,7 +710,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
   const [quantity, setQuantity] = React.useState(1)
   const [favorited, setFavorited] = React.useState(false)
   const tagline = PRODUCT_TAGLINE[product.id] || { oldPrice: product.price + 5000, discount: 'Oferta especial', rating: 4, reviews: 50 }
-  const description = PRODUCT_DESCRIPTIONS[product.id] || `Lleva contigo el estilo que te representa. ${product.name} es un accesorio exclusivo de Storebass, diseÃ±ado para quienes buscan originalidad y calidad en cada detalle.`
+  const description = PRODUCT_DESCRIPTIONS[product.id] || `Lleva contigo el estilo que te representa. ${product.name} es un accesorio exclusivo de Storebass, diseñado para quienes buscan originalidad y calidad en cada detalle.`
 
   const allCategoryProducts = Object.values(PRODUCTS_BY_CATEGORY).flat()
   const related = allCategoryProducts.filter(p => p.id !== product.id).slice(0, 4)
@@ -750,7 +751,7 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
               <h1 className="font-title-md font-bold text-5xl uppercase border-l-4 border-primary pl-6 text-white">{product.name}</h1>
               <div className="flex items-center gap-2 mb-4 mt-6">
                 <Ratings count={tagline.rating} />
-                <span className="text-sm text-gray-400">({tagline.reviews.toLocaleString('es-CO')} reseÃ±as)</span>
+                <span className="text-sm text-gray-400">({tagline.reviews.toLocaleString('es-CO')} reseñas)</span>
               </div>
               <p className="text-gray-300 leading-relaxed max-w-lg">{description}</p>
             </div>
@@ -821,13 +822,13 @@ function ProductDetailPage({ product, onAddToCart, onNavigateCheckout, onNavigat
           </div>
         </section>
         <section className="mt-32 mb-16">
-          <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">Â¿Por quÃ© comprar en Storebass?</h2>
+          <h2 className="font-headline-lg text-headline-lg uppercase border-l-4 border-primary pl-6 text-white text-left mb-12">¿Por qué comprar en Storebass?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: 'local_shipping', text: 'EnvÃ­os a\ntodo Colombia' },
+              { icon: 'local_shipping', text: 'Envíos a\ntodo Colombia' },
               { icon: 'verified', text: 'Productos\nexclusivos' },
               { icon: 'lock', text: 'Pagos 100%\nseguros' },
-              { icon: 'support_agent', text: 'AtenciÃ³n\npersonalizada' },
+              { icon: 'support_agent', text: 'Atención\npersonalizada' },
             ].map((item) => (
                 <div key={item.icon} className="flex items-center gap-4 group">
                 <div className="p-4 bg-primary rounded-2xl text-on-primary">
@@ -860,13 +861,13 @@ function PaymentCompletePage({ cart, formatPrice, onNavigateHome }) {
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3"></path></svg>
             </div>
-            <h1 className="font-headline-lg text-headline-lg uppercase text-white">Â¡Pago Exitoso!</h1>
+            <h1 className="font-headline-lg text-headline-lg uppercase text-white">¡Pago Exitoso!</h1>
             <p className="text-white/80 mt-2 text-lg">Tu pedido ha sido confirmado</p>
           </div>
           <div className="p-8 space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-card-border">
               <div>
-                <p className="text-sm text-gray-400 uppercase tracking-wider">NÃºmero de pedido</p>
+                <p className="text-sm text-gray-400 uppercase tracking-wider">Número de pedido</p>
                 <p className="font-bold text-xl text-primary">{orderNumber}</p>
               </div>
               <div className="text-right">
@@ -895,7 +896,7 @@ function PaymentCompletePage({ cart, formatPrice, onNavigateHome }) {
                 <span>{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between text-white/80">
-                <span>EnvÃ­o</span>
+                <span>Envío</span>
                 <span>{shipping > 0 ? formatPrice(shipping) : 'Gratis'}</span>
               </div>
               <div className="flex justify-between text-xl font-bold text-white border-t border-card-border pt-2">
@@ -906,10 +907,10 @@ function PaymentCompletePage({ cart, formatPrice, onNavigateHome }) {
             <div className="bg-surface-container-low border border-card-border rounded-xl p-5">
               <div className="flex items-center gap-3 mb-3">
                 <Icon name="local_shipping" className="text-2xl text-primary" />
-                <h4 className="font-headline-lg text-lg uppercase text-white">InformaciÃ³n de envÃ­o</h4>
+                <h4 className="font-headline-lg text-lg uppercase text-white">Información de envío</h4>
               </div>
-              <p className="text-white/80 text-sm">Tu pedido serÃ¡ enviado a la direcciÃ³n registrada en un plazo de 2 a 5 dÃ­as hÃ¡biles.</p>
-              <p className="text-white/60 text-xs mt-2">RecibirÃ¡s un correo con el nÃºmero de guÃ­a cuando sea despachado.</p>
+              <p className="text-white/80 text-sm">Tu pedido será enviado a la dirección registrada en un plazo de 2 a 5 días hábiles.</p>
+              <p className="text-white/60 text-xs mt-2">Recibirás un correo con el número de guía cuando sea despachado.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <button onClick={onNavigateHome} className="flex-1 bg-primary text-on-primary py-4 font-headline-lg text-xl uppercase rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
@@ -942,14 +943,14 @@ function PaymentRejectedPage({ cart, formatPrice, onNavigateHome, onNavigateChec
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3"></path></svg>
             </div>
-            <h1 className="font-headline-lg text-headline-lg uppercase text-white">Â¡Pago Rechazado!</h1>
+            <h1 className="font-headline-lg text-headline-lg uppercase text-white">¡Pago Rechazado!</h1>
             <p className="text-white/80 mt-2 text-lg">No se pudo procesar tu pago</p>
           </div>
           <div className="p-8 space-y-8">
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6 text-center">
               <Icon name="info" className="text-4xl text-red-500 mb-3" />
-              <p className="text-white/90 text-lg font-bold mb-2">InformaciÃ³n incompleta</p>
-              <p className="text-white/70">Debes completar todos los campos del mÃ©todo de pago y tus datos personales para continuar.</p>
+              <p className="text-white/90 text-lg font-bold mb-2">Información incompleta</p>
+              <p className="text-white/70">Debes completar todos los campos del método de pago y tus datos personales para continuar.</p>
             </div>
             <div>
               <h3 className="font-headline-lg text-xl uppercase text-white mb-4">Resumen del Pedido</h3>
@@ -972,7 +973,7 @@ function PaymentRejectedPage({ cart, formatPrice, onNavigateHome, onNavigateChec
                 <span>{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between text-white/80">
-                <span>EnvÃ­o</span>
+                <span>Envío</span>
                 <span>{shipping > 0 ? formatPrice(shipping) : 'Gratis'}</span>
               </div>
               <div className="flex justify-between text-xl font-bold text-white border-t border-card-border pt-2">
@@ -1008,7 +1009,7 @@ function SearchResultsPage({ query, products, onAddToCart, onNavigateProduct }) 
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <Icon name="search_off" className="text-6xl text-secondary opacity-50 mb-4" />
             <p className="font-title-md text-xl text-white mb-2">No encontramos resultados</p>
-            <p className="text-white/60">Intenta con otro tÃ©rmino de bÃºsqueda</p>
+            <p className="text-white/60">Intenta con otro término de búsqueda</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1033,52 +1034,24 @@ function SearchResultsPage({ query, products, onAddToCart, onNavigateProduct }) 
   )
 }
 
-function PortfolioPage() {
-  const pinRef = React.useRef(null)
-  const containerRef = React.useRef(null)
-  const [hoveredIndex, setHoveredIndex] = React.useState(null)
+const sebasImages = [
+  { src: "/imagenes-sebas/1.jpg", alt: "Imagen 1" },
+  { src: "/imagenes-sebas/2.png", alt: "Imagen 2" },
+  { src: "/imagenes-sebas/3.jpg", alt: "Imagen 3" },
+  { src: "/imagenes-sebas/4.png", alt: "Imagen 4" },
+  { src: "/imagenes-sebas/5.jpg", alt: "Imagen 5" },
+  { src: "/imagenes-sebas/7.jpg", alt: "Imagen 7" },
+  { src: "/imagenes-sebas/8.png", alt: "Imagen 8" },
+  { src: "/imagenes-sebas/9.jpg", alt: "Imagen 9" },
+  { src: "/imagenes-sebas/10.jpg", alt: "Imagen 10" },
+  { src: "/imagenes-sebas/11.png", alt: "Imagen 11" },
+  { src: "/imagenes-sebas/12.jpg", alt: "Imagen 12" },
+  { src: "/imagenes-sebas/13.jpg", alt: "Imagen 13" },
+]
 
+function PortfolioPage() {
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [])
-
-  const steps = [
-    { step: "01", title: "Fotomontaje", desc: "ComposiciÃ³n y retoque digital" },
-    { step: "02", title: "Mockups", desc: "Prototipado de productos" },
-    { step: "03", title: "Marketing Digital", desc: "Estrategia y contenido" },
-    { step: "04", title: "DiseÃ±o 3D", desc: "Modelado y renderizado" },
-    { step: "05", title: "EdiciÃ³n de Video", desc: "PostproducciÃ³n y motion" },
-  ]
-
-  React.useEffect(() => {
-    if (!pinRef.current || !containerRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current.children,
-        { scale: 0, autoAlpha: 0 },
-        {
-          scale: 1, autoAlpha: 1, duration: 1.2,
-          ease: 'back.out(1.2)', stagger: 0.05,
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      )
-      gsap.to(containerRef.current, {
-        rotation: 360, ease: 'none',
-        scrollTrigger: {
-          trigger: pinRef.current,
-          pin: true,
-          start: 'center center',
-          end: '+=2000',
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      })
-    }, pinRef)
-    return () => ctx.revert()
   }, [])
 
   return (
@@ -1097,7 +1070,7 @@ function PortfolioPage() {
             Sebastian Valencia Perea
           </h1>
           <p className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto font-body-base whitespace-nowrap">
-            DiseÃ±ador Visual Digital y Esp. Interfaz y DiseÃ±o UX/UI
+            Diseñador Visual Digital y Esp. Interfaz y Diseño UX/UI
           </p>
           <div className="flex flex-wrap justify-center gap-4 w-full mt-4">
             <a href="https://www.behance.net/sebastivalenci56" target="_blank" rel="noopener noreferrer" aria-label="Behance" className="flex items-center justify-center rounded-full border border-zinc-800 bg-[#053EFF] text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ width: 56, height: 56 }}>
@@ -1106,7 +1079,7 @@ function PortfolioPage() {
             <a href="https://www.instagram.com/seba.sphotography?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex items-center justify-center rounded-full border border-zinc-800 bg-[#E4405F] text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ width: 56, height: 56 }}>
               <img src="/instagram.svg" alt="Instagram" className="w-5 h-5 object-contain" />
             </a>
-            <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="ContÃ¡ctame" className="flex items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-50 text-zinc-900 px-6 py-3 text-sm font-semibold shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ minWidth: 130, minHeight: 56 }}>
+            <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="Contáctame" className="flex items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-50 text-zinc-900 px-6 py-3 text-sm font-semibold shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ minWidth: 130, minHeight: 56 }}>
               Contactar
             </a>
           </div>
@@ -1122,44 +1095,9 @@ function PortfolioPage() {
         </section>
       </main>
 
-      <div ref={pinRef} className="relative w-full flex justify-center overflow-hidden" style={{ height: '520px' }}>
-        <div className="relative w-full max-w-[1400px]">
-          <ul ref={containerRef} className="absolute m-0 p-0 list-none" style={{ width: '800px', height: '800px', bottom: '-360px', left: 'calc(50% - 400px)' }}>
-          {steps.map((item, i) => {
-            const angle = (i / steps.length) * 2 * Math.PI
-            const radius = 390
-            const x = radius * Math.cos(angle)
-            const y = radius * Math.sin(angle)
-            const rotationAngle = (angle * 180) / Math.PI
-            const isHovered = hoveredIndex === i
-            const isAnyHovered = hoveredIndex !== null
+      <PortfolioGallery images={sebasImages} />
 
-            return (
-              <li key={i} className="absolute top-1/2 left-1/2"
-                style={{ transform: `translate(-50%, -50%) translate3d(${x}px, ${y}px, 0) rotate(${rotationAngle + 90}deg)`, zIndex: isHovered ? 100 : 10 }}>
-                <div role="button" tabIndex={0}
-                  onClick={() => {}}
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  className={`block cursor-pointer outline-none text-left rounded-xl transition-all duration-500 ease-out w-[160px] sm:w-[200px] min-h-[240px] p-6 border flex flex-col justify-between items-start
-                    ${isHovered ? 'bg-primary border-primary text-black scale-125 -translate-y-8 shadow-xl' : 'bg-elevated-gray border-card-border text-white scale-100'}
-                    ${isAnyHovered && !isHovered ? 'blur-[2px] opacity-40 grayscale' : 'blur-0 opacity-100'}`}>
-                  <div className="w-full flex justify-between items-start">
-                    <span className={`font-title-md text-lg ${isHovered ? 'text-black/60' : 'text-white/50'}`}>{item.step}</span>
-                    {isHovered && <span className="material-symbols-outlined text-lg text-black">check</span>}
-                  </div>
-                  <div className="mt-auto">
-                    <h3 className="text-xl font-title-md mb-1">{item.title}</h3>
-                    <p className={`text-sm font-body-base ${isHovered ? 'text-black/80' : 'text-white/50'}`}>{item.desc}</p>
-                  </div>
-                </div>
-              </li>
-            )
-          })}
-          </ul>
-        </div>
-      </div>
-      <div className="h-[30vh]" />
+      <div className="h-[5vh]" />
     </div>
   )
 }
@@ -1172,99 +1110,47 @@ function PortfolioPageMap() {
   return (
     <div className="topographic-bg overflow-x-hidden min-h-screen pt-16">
       <main className="max-w-[1400px] mx-auto px-margin-mobile md:px-margin-desktop space-y-stack-lg">
-        <section className="relative w-full h-[400px] mt-8 rounded-xl overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
-          <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1400&h=400&fit=crop')" }}></div>
-          <div className="relative z-20 h-full flex flex-col justify-end p-margin-desktop space-y-unit">
-            <div className="flex items-center gap-stack-md">
-              <div className="w-32 h-32 rounded-full border-4 border-primary overflow-hidden bg-surface shadow-2xl flex-shrink-0">
-                <img className="w-full h-full object-cover" alt="Map Profile" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&h=300&fit=crop&crop=face" />
-              </div>
-              <div>
-                <h1 className="text-display-lg font-display-lg text-on-surface uppercase leading-none">Map Studio</h1>
-                <p className="text-headline-md font-headline-md text-primary mt-2">Creative Director â€” Brand Strategist</p>
-              </div>
-            </div>
+        <section className="w-full flex flex-col items-center text-center gap-6 py-16">
+          <div className="relative mb-2">
+            <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#D4D400] via-[#9ACD32] to-[#228B22] opacity-60 blur-lg animate-glow" />
+            <img
+              src="/Map.png"
+              alt="Maria Paula Grisales Díaz"
+              className="relative size-32 rounded-full border-4 border-white shadow-xl z-10 object-cover"
+            />
           </div>
+          <h1 className="text-5xl md:text-6xl font-headline-lg leading-tight tracking-tight text-white drop-shadow-lg uppercase">
+            Maria Paula Grisales Díaz
+          </h1>
+          <p className="text-xl md:text-2xl text-white/60 w-full font-body-base whitespace-nowrap">
+            Profesional en Publicidad Digital y Mercadeo y Esp. Interfaz y Diseño UX/UI
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 w-full mt-4">
+            <a href="https://www.behance.net/bymapportfolio?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaASs_jhleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAaeZWvc0zDDjvgHe7XDim5A7OzIHm2mMgFnFHG5kG0awtra0SgdpnoK_J_OTHA_aem_OYVTsY-3MdG7d31HUfyEMA" target="_blank" rel="noopener noreferrer" aria-label="Behance" className="flex items-center justify-center rounded-full border border-zinc-800 bg-[#053EFF] text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ width: 56, height: 56 }}>
+              <img src="/behance.png" alt="Behance" className="w-5 h-5 object-contain" />
+            </a>
+            <a href="https://www.instagram.com/bymap.col/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex items-center justify-center rounded-full border border-zinc-800 bg-[#E4405F] text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ width: 56, height: 56 }}>
+              <img src="/instagram.svg" alt="Instagram" className="w-5 h-5 object-contain" />
+            </a>
+            <a href="https://www.whatsapp.com/?lang=es" target="_blank" rel="noopener noreferrer" aria-label="Contáctame" className="flex items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-50 text-zinc-900 px-6 py-3 text-sm font-semibold shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary focus:outline-none" style={{ minWidth: 130, minHeight: 56 }}>
+              Contactar
+            </a>
+          </div>
+          <style>{`
+            @keyframes glow {
+              0%, 100% { opacity: 0.6; }
+              50% { opacity: 1; }
+            }
+            .animate-glow {
+              animation: glow 2s ease-in-out infinite;
+            }
+          `}</style>
         </section>
-
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-          <aside className="md:col-span-3 space-y-stack-md">
-            <div className="bg-surface-container rounded-xl p-stack-md border border-outline-variant">
-              <h3 className="text-label-lg font-label-lg text-on-surface-variant uppercase mb-4">Info</h3>
-              <ul className="space-y-stack-sm">
-                <li className="flex items-center gap-2 text-body-md font-body-md text-on-surface">
-                  <span className="material-symbols-outlined text-primary text-[18px]">palette</span>
-                  DiseÃ±ador grÃ¡fico & ilustrador
-                </li>
-                <li className="flex items-center gap-2 text-body-md font-body-md text-on-surface">
-                  <span className="material-symbols-outlined text-primary text-[18px]">public</span>
-                  BogotÃ¡, Colombia
-                </li>
-                <li className="flex items-center gap-2 text-body-md font-body-md text-on-surface">
-                  <span className="material-symbols-outlined text-primary text-[18px]">stars</span>
-                  Creative Partner
-                </li>
-              </ul>
-              <div className="mt-8 space-y-stack-sm">
-                <button className="w-full bg-primary text-black py-3 font-bold text-label-lg rounded transition-all hover:brightness-110 active:scale-95">Ver portafolio completo</button>
-                <button className="w-full border-2 border-outline-variant text-on-surface py-3 font-bold text-label-lg rounded transition-all hover:border-primary hover:text-primary active:scale-95">Compartir perfil</button>
-              </div>
-            </div>
-          </aside>
-
-          <section className="md:col-span-9">
-            <div className="flex items-center justify-between mb-stack-md">
-              <h2 className="text-headline-lg font-headline-lg text-on-surface">Trabajos</h2>
-              <div className="flex items-center gap-4">
-                <button className="flex items-center gap-2 text-label-lg font-label-lg text-on-surface-variant bg-surface-container px-4 py-2 rounded border border-outline-variant hover:border-primary transition-all">
-                  <span className="material-symbols-outlined text-[18px]">add_circle</span>
-                  Nuevo proyecto
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
-              {[
-                { title: 'NeÃ³n Identity', subtitle: 'Branding', img: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=300&fit=crop' },
-                { title: 'Flow App', subtitle: 'UI/UX Design', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop' },
-                { title: 'Urban Streets', subtitle: 'FotografÃ­a', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop' },
-                { title: 'BotÃ¡nica', subtitle: 'Pattern Design', img: 'https://images.unsplash.com/photo-1528495612343-9caed2b4b10d?w=400&h=300&fit=crop' },
-                { title: 'Mountain Gear', subtitle: 'Product Design', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=300&fit=crop' },
-              ].map((card, i) => (
-                <div key={i} className="bento-card group rounded-xl overflow-hidden border border-outline-variant flex flex-col">
-                  <div className="relative h-64 overflow-hidden">
-                    <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={card.title} src={card.img} />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                      <span className="material-symbols-outlined text-primary bg-black/50 p-3 rounded-full">visibility</span>
-                      <span className="material-symbols-outlined text-primary bg-black/50 p-3 rounded-full">favorite</span>
-                    </div>
-                  </div>
-                  <div className="p-stack-md flex justify-between items-center">
-                    <div>
-                      <h4 className="text-label-lg font-label-lg text-on-surface">{card.title}</h4>
-                      <p className="text-body-md font-body-md text-on-surface-variant">{card.subtitle}</p>
-                    </div>
-                    <button className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-black">
-                      <span className="material-symbols-outlined">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
       </main>
 
-      <style>{`
-        .bento-card {
-          background-color: #1E1E1E;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .bento-card:hover {
-          border-color: #d9e123;
-          transform: translateY(-4px);
-        }
-      `}</style>
+      <PortfolioGallery />
+
+      <div className="h-[5vh]" />
     </div>
   )
 }
@@ -1289,7 +1175,7 @@ function PaymentProcessingPage({ success, onPaymentComplete, onPaymentRejected }
             <GooeyLoader primaryColor="#f1f132" secondaryColor="#c4c42a" borderColor="#444" />
             <div>
               <h1 className="font-headline-lg text-headline-lg uppercase text-white mb-2">Procesando pago</h1>
-              <p className="text-white/60">Por favor espera, estamos verificando tu informaciÃ³n...</p>
+              <p className="text-white/60">Por favor espera, estamos verificando tu información...</p>
             </div>
             <div className="flex items-center gap-2 text-primary">
               <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
@@ -1329,7 +1215,7 @@ function SplashPage({ onComplete }) {
     { at: 30, label: 'cargando' },
     { at: 60, label: 'preparando' },
     { at: 85, label: 'casi listo' },
-    { at: 100, label: 'Â¡listo!' },
+    { at: 100, label: '¡listo!' },
   ]
   const label = [...phases].reverse().find(p => progress >= p.at)?.label || 'iniciando'
 
